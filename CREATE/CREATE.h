@@ -9,3 +9,4 @@
 
 void createCollection();
 void createOneDocumentJSON();
+void createManyDocumentsJSON();

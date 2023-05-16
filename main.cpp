@@ -85,10 +85,12 @@ int main() {
             else if(choixCreate == 2){
                 //Création d'un document
                 createOneDocumentJSON();
-
-
             }
             else if(choixCreate == 3){
+                //Création de plusieurs documents
+                createManyDocumentsJSON();
+            }
+            else if(choixCreate == 4){
                 std::cout << "\nVous avez quitté le menu Create\n";
             }
         }

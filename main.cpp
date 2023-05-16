@@ -11,6 +11,7 @@
 
 #include "CREATE/CREATE.h"
 #include "DELETE/DELETE.h"
+#include "READ/READ.h"
 
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;

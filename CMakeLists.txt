@@ -12,7 +12,7 @@ include_directories("DriversMongoDB/mongo-cxx-driver-r3.7.0/mongo-cxx-driver-r3.
 include_directories("C:/boost")
 
 link_directories("DriversMongoDB/mongo-cxx-driver-r3.7.0/mongo-cxx-driver-r3.7.0/build/install/lib")
-add_executable(MongoDBCPlusPlus main.cpp ConnectionMongoDB/connection.cpp ConnectionMongoDB/connection.h)
+add_executable(MongoDBCPlusPlus main.cpp ConnectionMongoDB/connection.cpp ConnectionMongoDB/connection.h CREATE/CREATE.cpp CREATE/CREATE.h)
 
 target_link_libraries(MongoDBCPlusPlus mongocxx)
 target_link_libraries(MongoDBCPlusPlus bsoncxx)

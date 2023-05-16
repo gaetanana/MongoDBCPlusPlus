@@ -5,7 +5,7 @@
 #include <mongocxx/uri.hpp>
 #include "mongocxx/instance.hpp"
 #include "bsoncxx/stdx/optional.hpp"
-
+#include "CREATE/CREATE.h"
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
 using bsoncxx::builder::stream::document;
@@ -15,16 +15,15 @@ using bsoncxx::builder::stream::open_document;
 
 
 int main() {
-    mongocxx::instance inst{};
+    /*mongocxx::instance inst{};
     mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
-
-    auto collection = conn["actiaDataBase"]["testCoc+llection"];
+    auto collection = conn["actiaDataBase"]["c++Collection"];*/
 
     // Insert a document
-    bsoncxx::document::value doc_value = document{} << "name" << "John Doe" << "age" << 30 << finalize;
+    /*bsoncxx::document::value doc_value = document{} << "name" << "John Doe" << "age" << 30 << finalize;
     bsoncxx::document::view doc_view = doc_value.view();
     bsoncxx::stdx::optional<mongocxx::result::insert_one> result = collection.insert_one(doc_view);
-    std::cout << "Inserted " << result->inserted_id().get_oid().value.to_string() << std::endl;
+    std::cout << "Inserted " << result->inserted_id().get_oid().value.to_string() << std::endl;*/
 
     // Update the document
     /*document filter_builder{};
@@ -39,9 +38,12 @@ int main() {
     std::cout << "Deleted" << std::endl;*/
 
     // Read all documents
-    mongocxx::cursor cursor = collection.find({});
+    /*mongocxx::cursor cursor = collection.find({});
     for(auto doc : cursor) {
         std::cout << bsoncxx::to_json(doc) << std::endl;
-    }
+    }*/
+
+    createCollection();
+
     return 0;
 }

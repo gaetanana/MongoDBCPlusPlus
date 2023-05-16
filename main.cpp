@@ -5,9 +5,12 @@
 #include <mongocxx/uri.hpp>
 #include "mongocxx/instance.hpp"
 #include "bsoncxx/stdx/optional.hpp"
-#include "CREATE/CREATE.h"
+
 #include <ctime>
 #include <thread>
+
+#include "CREATE/CREATE.h"
+#include "DELETE/DELETE.h"
 
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
@@ -18,9 +21,11 @@ using bsoncxx::builder::stream::open_document;
 using namespace std;
 
 int main() {
-    /*mongocxx::instance inst{};
-    mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
-    auto collection = conn["actiaDataBase"]["c++Collection"];*/
+    //mongocxx::instance inst{};
+    //mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
+    //auto collection = conn["actiaDataBase"]["c++Collection"];
+
+
 
     // Insert a document
     /*bsoncxx::document::value doc_value = document{} << "name" << "John Doe" << "age" << 30 << finalize;
@@ -149,16 +154,19 @@ int main() {
             std::cout << "=======================================================================\n";
             std::cout << "=================== Veuillez choisir une option : ====================\n";
             std::cout << "||                                                                   ||\n";
-            std::cout << "|| 1 - Supprimer une cle                                             ||\n";
-            std::cout << "|| 2 - Supprimer toutes les cles                                     ||\n";
+            std::cout << "|| 1 - Supprimer une document avec son id d'une collection           ||\n";
+            std::cout << "|| 2 - Supprimer tous les documents d'une collection                 ||\n";
             std::cout << "|| 3 - Quitter le menu Delete                                        ||\n";
             std::cout << "||                                                                   ||\n";
             std::cout << "=======================================================================\n";
             int choixDelete;
             std::cout << "\nVotre choix : ";
             std::cin >> choixDelete;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if(choixDelete == 1){
+                deleteOneDocument();
             }else if(choixDelete == 2){
+                deleteAllDocuments();
             }else if(choixDelete == 3){
                 std::cout << "\nVous avez quitté le menu Delete\n";
             }

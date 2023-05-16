@@ -25,6 +25,19 @@ using bsoncxx::builder::stream::open_array;
 using bsoncxx::builder::stream::open_document;
 
 using namespace std;
+/**
+ * Cette fonction permet de savoir si une collection existe dans la base de données
+ *
+ */
+bool collectionExist(mongocxx::database database, string collectionName){
+    auto cursor = database.list_collections();
+    for (auto&& doc : cursor) {
+        if (doc["name"].get_utf8().value.to_string() == collectionName) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 /**
@@ -157,6 +170,8 @@ void createOneDocumentJSON() {
 */
 
 void createManyDocumentsJSON() {
+    //Chrono pour mesurer le temps d'exécution
+    auto start = chrono::high_resolution_clock::now();
     mongocxx::instance instance{};
     mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
     mongocxx::client client(uri);
@@ -192,10 +207,14 @@ void createManyDocumentsJSON() {
             bsoncxx::stdx::optional<mongocxx::result::insert_one> result = coll.insert_one(document.view());
 
             if(result) {
-                std::cout << "Document inséré avec succès pour le fichier " << entry.path() << ".\n";
+                //std::cout << "Document insere avec succes pour le fichier " << entry.path() << ".\n";
+                //Fin du chrono
             } else {
-                std::cout << "Erreur lors de l'insertion du document pour le fichier " << entry.path() << ".\n";
+                //std::cout << "Erreur lors de l'insertion du document pour le fichier " << entry.path() << ".\n";
             }
         }
     }
+    auto stop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
+    cout << "Temps d'exécution de l'insertion  : " << duration.count() << " secondes" << endl;
 }

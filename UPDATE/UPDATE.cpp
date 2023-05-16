@@ -107,5 +107,4 @@ void updateAllHumanDocument(mongocxx::client &client) {
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
     cout << "Temps d'execution : " << elapsed_seconds.count() << "s\n";
-
 }

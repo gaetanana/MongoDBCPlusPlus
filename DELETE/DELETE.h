@@ -6,8 +6,9 @@
 #define MONGODBCPLUSPLUS_DELETE_H
 
 #endif //MONGODBCPLUSPLUS_DELETE_H
+#include <mongocxx/client.hpp>
 
 
-void deleteAllDocuments();
+void deleteAllDocuments(mongocxx::client &client);
 
-void deleteOneDocument();
+void deleteOneDocument(mongocxx::client &client);

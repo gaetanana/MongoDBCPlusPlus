@@ -29,10 +29,7 @@ using namespace std;
  * Cette fonction supprime un document de la collection avec son ID
  */
 
-void deleteOneDocument() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
+void deleteOneDocument(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -58,12 +55,9 @@ void deleteOneDocument() {
  * Cette fonction permet de supprimer tous les documents d'une collection
  */
 
-void deleteAllDocuments() {
+void deleteAllDocuments(mongocxx::client &client) {
     //Chrono
     auto startChrono = chrono::high_resolution_clock::now();
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;

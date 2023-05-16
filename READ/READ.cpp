@@ -55,7 +55,6 @@ void readOneDocument(){
 /**
  * Cette fonction permet de lire tous les documents d'une collection
  */
-
 void readAllDocument(){
     mongocxx::instance instance{};
     mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");

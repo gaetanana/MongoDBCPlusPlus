@@ -104,8 +104,8 @@ int main() {
             std::cout << "=======================================================================\n";
             std::cout << "=================== Veuillez choisir une option : ====================\n";
             std::cout << "||                                                                   ||\n";
-            std::cout << "|| 1 - Lire la valeur d'une cle                                      ||\n";
-            std::cout << "|| 2 - Lire toutes les cles presentes dans la base de donnees        ||\n";
+            std::cout << "|| 1 - Lire la valeur d'un document                                  ||\n";
+            std::cout << "|| 2 - Lire toutes les documents d'une collection                    ||\n";
             std::cout << "|| 3 - Lire toutes les cles qui a dans les valeurs un humain         ||\n";
             std::cout << "|| 4 - Lire toutes les cles qui a dans les valeurs un humain avec    ||\n";
             std::cout << "||     une probabilite de survie superieure a 0.5                    ||\n";
@@ -125,8 +125,12 @@ int main() {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // consomme la nouvelle ligne
 
             if(choixRead == 1){
+                //Lire la valeur d'un document
+                readOneDocument();
 
             }else if(choixRead == 2){
+                //Lire tous les documents d'une collection
+                readAllDocument();
             }
             else if(choixRead == 3){
             }

@@ -10,6 +10,6 @@
 #endif //MONGODBCPLUSPLUS_CREATE_H
 using namespace std;
 void createCollection(mongocxx::client &client);
-void createOneDocumentJSON();
-void createManyDocumentsJSON();
+void createOneDocumentJSON(mongocxx::client &client);
+void createManyDocumentsJSON(mongocxx::client &client);
 bool collectionExist(mongocxx::database database, string collectionName);

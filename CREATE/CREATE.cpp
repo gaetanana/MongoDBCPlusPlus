@@ -123,11 +123,7 @@ string xmlToJson(string xml){
  * et la fonction convertit le XML en JSON et l'insère dans la collection
  */
 
-void createOneDocumentJSON() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
-
+void createOneDocumentJSON(mongocxx::client& client) {
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
 
@@ -171,13 +167,9 @@ void createOneDocumentJSON() {
  * et la fonction convertit le XML en JSON et l'insère dans la collection
 */
 
-void createManyDocumentsJSON() {
+void createManyDocumentsJSON(mongocxx::client& client) {
     //Chrono pour mesurer le temps d'exécution
     auto start = chrono::high_resolution_clock::now();
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
-
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
 

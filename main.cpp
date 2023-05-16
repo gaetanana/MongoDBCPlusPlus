@@ -105,14 +105,14 @@ int main() {
             std::cout << "=================== Veuillez choisir une option : ====================\n";
             std::cout << "||                                                                   ||\n";
             std::cout << "|| 1 - Lire la valeur d'un document                                  ||\n";
-            std::cout << "|| 2 - Lire toutes les documents d'une collection                    ||\n";
-            std::cout << "|| 3 - Lire toutes les cles qui a dans les valeurs un humain         ||\n";
-            std::cout << "|| 4 - Lire toutes les cles qui a dans les valeurs un humain avec    ||\n";
-            std::cout << "||     une probabilite de survie superieure a 0.5                    ||\n";
-            std::cout << "|| 5 - Lire toutes les cle qui a dans les valeurs un humain avec une ||\n"
+            std::cout << "|| 2 - Lire tous les documents d'une collection                      ||\n";
+            std::cout << "|| 3 - Lire tous les documents qui ont un type Human                 ||\n";
+            std::cout << "|| 4 - Lire tous les documents qui ont un type Human avec            ||\n";
+            std::cout << "||     une probabilite superieure a 0.5                              ||\n";
+            std::cout << "|| 5 - Lire tous les documents qui ont un type Human avec une        ||\n"
                          "||     probabilite de 0.5 et les donnees datent d'apres le           ||\n"
                          "||     2023-04-21T14:45:23                                           ||\n";
-            std::cout << "|| 6 - Lire toutes les cle qui a dans les valeurs un humain avec une ||\n"
+            std::cout << "|| 6 - Lire tous les documents qui ont un type  Human avec une       ||\n"
                          "||     probabilite de 0.5 et les donnees datent d'apres le           ||\n"
                          "||     2023-04-21T14:45:23 et qui sont de genre masculin             ||\n";
             std::cout << "|| 7 - Quitter le menu Read                                          ||\n";
@@ -133,24 +133,26 @@ int main() {
                 readAllDocument();
             }
             else if(choixRead == 3){
+                readAllDocumentWithHuman();
             }
             else if(choixRead == 4){
+                readAllDocumentWithHumanProbability();
             }
             else if(choixRead == 5){
+                readAllDocumentWithHumanProbabilityAndDate();
             }
             else if(choixRead == 6){
+                readAllDocumentWithHumanProbabilityAndDateGender();
             }
             else if(choixRead == 7){
                 std::cout << "\nVous avez quitté le menu Read\n";
             }
-
         }
         else if(choix == 3){
             cout << "========================================================\n";
             cout << "|| Update n'est pas encore disponible                  ||\n";
             cout << "========================================================\n";
         }
-
         else if(choix == 4){
             std::cout << "\n=======================================================================\n";
             std::cout << "||                          Menu Delete                              ||\n";

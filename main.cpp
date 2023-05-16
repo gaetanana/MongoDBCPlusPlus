@@ -22,32 +22,6 @@ using bsoncxx::builder::stream::open_document;
 using namespace std;
 
 int main() {
-    //mongocxx::instance inst{};
-    //mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
-    //auto collection = conn["actiaDataBase"]["c++Collection"];
-
-    // Insert a document
-    /*bsoncxx::document::value doc_value = document{} << "name" << "John Doe" << "age" << 30 << finalize;
-    bsoncxx::document::view doc_view = doc_value.view();
-    bsoncxx::stdx::optional<mongocxx::result::insert_one> result = collection.insert_one(doc_view);
-    std::cout << "Inserted " << result->inserted_id().get_oid().value.to_string() << std::endl;*/
-
-    // Update the document
-    /*document filter_builder{};
-    filter_builder << "name" << "John Doe";
-    collection.update_one(filter_builder.view(),document{} << "$set" << open_document << "age" << 31 << close_document << finalize);
-    std::cout << "Updated" << std::endl;*/
-
-    // Delete the document
-    /*document filter_builder_delete{};
-    filter_builder_delete << "name" << "John Doe";
-    collection.delete_one(filter_builder_delete.view());
-    std::cout << "Deleted" << std::endl;*/
-    // Read all documents
-    /*mongocxx::cursor cursor = collection.find({});
-    for(auto doc : cursor) {
-        std::cout << bsoncxx::to_json(doc) << std::endl;
-    }*/
     while (true) {
         std::cout << "\n========================================================\n";
         std::cout << "|| Programme de test de la base de donnees MongoDB    ||\n";
@@ -148,9 +122,31 @@ int main() {
             }
         }
         else if(choix == 3){
-            cout << "========================================================\n";
-            cout << "|| Update n'est pas encore disponible                  ||\n";
-            cout << "========================================================\n";
+            std::cout << "\n=======================================================================\n";
+            std::cout << "||                          Menu Update                              ||\n";
+            std::cout << "=======================================================================\n";
+            std::cout << "=================== Veuillez choisir une option : ====================\n";
+            std::cout << "||                                                                   ||\n";
+            std::cout << "|| 1 - Modifier la valeur Human d'un document                        ||\n";
+            std::cout << "|| 2 - Modifier toutes valeurs Human par une autre valeur            ||\n";
+            std::cout << "|| 3 - Quitter le menu Update                                        ||\n";
+            std::cout << "||                                                                   ||\n";
+            std::cout << "=======================================================================\n";
+            int choixUpdate;
+            std::cout << "\nVotre choix : ";
+            std::cin >> choixUpdate;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            if(choixUpdate == 1){
+                //Modifier la valeur Human d'un document
+                updateOneDocument();
+            }
+            else if(choixUpdate == 2){
+                //Modifier toutes valeurs Human par une autre valeur
+                updateAllHumanDocument();
+            }
+            else if(choixUpdate == 3){
+                std::cout << "\nVous avez quitté le menu Update\n";
+            }
         }
         else if(choix == 4){
             std::cout << "\n=======================================================================\n";

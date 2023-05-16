@@ -16,6 +16,11 @@
 #include "json/writer.h"
 #include "pugixml.hpp"
 #include "../CREATE/CREATE.h"
+#include <json/json.h>
+#include <json/reader.h>
+#include <iostream>
+#include <sstream>
+
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
 using bsoncxx::builder::stream::document;
@@ -23,53 +28,90 @@ using bsoncxx::builder::stream::finalize;
 using bsoncxx::builder::stream::open_array;
 using bsoncxx::builder::stream::open_document;
 using namespace std;
+
 /**
 * Cette fonction permet de modifier une valeur d'une clé en lui donnant l'id du document et une nouvelle valeur
+ * Cette fonction modifie "Human" par une nouvelle valeur
+ *
 */
 void updateOneDocument() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
-    mongocxx::database db = client["actiaDataBase"];
-    cout << "Entrer le nom de la collection : ";
+    mongocxx::instance inst{};
+    mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
+
+    cout << "Entrez le nom de la collection ou se trouve le document : ";
     string collectionName;
     getline(cin, collectionName);
-    if(!collectionExist(db, collectionName)){
+
+    if (!collectionExist(conn["actiaDataBase"], collectionName)) {
         cout << "La collection n'existe pas.\n";
         return;
     }
 
-    mongocxx::collection collection = db[collectionName];
+    cout << "Entrez l'id du document : ";
+    string id;
+    getline(cin, id);
+    auto collection = conn["actiaDataBase"]["testCollection"];
 
-    string documentId;
-    cout << "Entrez l'ID du document à mettre à jour : ";
-    getline(cin, documentId);
+    auto builder = bsoncxx::builder::stream::document{};
+    bsoncxx::document::value query = builder
+            << "_id" << bsoncxx::oid(id)
+            << bsoncxx::builder::stream::finalize;
 
-    string fieldName;
-    cout << "Entrez le nom du champ à mettre à jour : ";
-    getline(cin, fieldName);
+    auto doc = collection.find_one(query.view());
 
-    string newValue;
-    cout << "Entrez la nouvelle valeur pour le champ : ";
-    getline(cin, newValue);
+    cout << "Entrez la nouvelle valeur : ";
+    string newType;
+    getline(cin, newType);
+    if (doc) {
+        auto view = doc->view();
 
-    // Construit un nouveau document avec le champ à mettre à jour et sa nouvelle valeur
-    auto updatedDocument = bsoncxx::builder::stream::document{} << "$set" << bsoncxx::builder::stream::open_document << fieldName << newValue << bsoncxx::builder::stream::close_document << bsoncxx::builder::stream::finalize;
-
-    // Mise à jour du document dans la collection
-    bsoncxx::stdx::optional<mongocxx::result::update> result = collection.update_one(bsoncxx::builder::stream::document{} << "_id" << bsoncxx::oid{documentId} << bsoncxx::builder::stream::finalize, updatedDocument.view());
-
-    if(result && result->modified_count() > 0) {
-        cout << "Le document a été mis à jour avec succès.\n";
-    } else {
-        cout << "Aucun document n'a été mis à jour. Vérifiez que l'ID du document est correct.\n";
+        if (view["metadata"]["tt:MetadataStream"]["tt:VideoAnalytics"]["tt:Frame"]["tt:Object"]["tt:Appearance"]["tt:Class"]["tt:Type"]["content"].get_utf8().value.to_string() == "Human") {
+            bsoncxx::builder::stream::document update_doc{};
+            update_doc << "$set" << bsoncxx::builder::stream::open_document
+                       << "metadata.tt:MetadataStream.tt:VideoAnalytics.tt:Frame.tt:Object.tt:Appearance.tt:Class.tt:Type.content" << newType
+                       << bsoncxx::builder::stream::close_document;
+            collection.update_one(query.view(), update_doc.view());
+        }
     }
 }
-
 
 /**
 * Cette fonction permet de modifier toutes les valeurs qui ont le type "Human" pour le remplacer par une nouvelle valeur
 */
-void updateAllHumanDocument(){
+void updateAllHumanDocument() {
+    //Chrono
+    auto start = std::chrono::system_clock::now();
+    mongocxx::instance inst{};
+    mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
+
+    // Demander à l'utilisateur le nom de la collection
+    std::string collectionName;
+    std::cout << "Entrez le nom de la collection: ";
+    std::getline(std::cin, collectionName);
+
+    // Demander à l'utilisateur la nouvelle valeur
+    std::string newType;
+    std::cout << "Entrez la nouvelle valeur pour remplacer 'Human': ";
+    std::getline(std::cin, newType);
+
+    auto collection = conn["actiaDataBase"][collectionName]; // Remplacer "database" par le nom de votre base de données
+
+    auto cursor = collection.find({});
+
+    for(auto doc_view : cursor) {
+        auto typeField = doc_view["metadata"]["tt:MetadataStream"]["tt:VideoAnalytics"]["tt:Frame"]["tt:Object"]["tt:Appearance"]["tt:Class"]["tt:Type"];
+        if(typeField && typeField["content"] && typeField["content"].get_utf8().value.to_string() == "Human") {
+            bsoncxx::builder::stream::document update_doc{};
+            update_doc << "$set" << bsoncxx::builder::stream::open_document
+                       << "metadata.tt:MetadataStream.tt:VideoAnalytics.tt:Frame.tt:Object.tt:Appearance.tt:Class.tt:Type.content" << newType
+                       << bsoncxx::builder::stream::close_document;
+
+            collection.update_one(doc_view, update_doc.view());
+        }
+    }
+    //Fin chrono
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    cout << "Temps d'execution : " << elapsed_seconds.count() << "s\n";
 
 }

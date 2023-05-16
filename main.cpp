@@ -14,7 +14,6 @@
 #include "READ/READ.h"
 #include "UPDATE/UPDATE.h"
 
-using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
 using bsoncxx::builder::stream::document;
 using bsoncxx::builder::stream::finalize;

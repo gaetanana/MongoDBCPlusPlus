@@ -55,6 +55,11 @@ void createCollection() {
     std::cout << "Veuillez entrer le nom de la collection : ";
     std::getline(std::cin, collectionName);
 
+    if(collectionExist(db, collectionName)){
+        std::cout << "La collection existe deja.\n";
+        return;
+    }
+
     bsoncxx::document::value create_collection_cmd =
             bsoncxx::builder::stream::document{}
                     << "create" << collectionName
@@ -184,6 +189,11 @@ void createManyDocumentsJSON() {
     std::getline(std::cin, collectionName);
     mongocxx::collection coll = db[collectionName];
 
+    if(!collectionExist(db, collectionName)){
+        std::cout << "La collection n'existe pas.\n";
+        return;
+    }
+
     std::string dirPath;
     std::cout << "Veuillez entrer le chemin absolu vers le dossier contenant les fichiers XML : ";
     std::getline(std::cin, dirPath);
@@ -195,7 +205,6 @@ void createManyDocumentsJSON() {
                 std::cout << "Erreur lors de l'ouverture du fichier " << entry.path() << ".\n";
                 continue;
             }
-
             std::stringstream buffer;
             buffer << file.rdbuf();
             std::string xmlStr = buffer.str();
@@ -216,5 +225,5 @@ void createManyDocumentsJSON() {
     }
     auto stop = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
-    cout << "Temps d'exécution de l'insertion  : " << duration.count() << " secondes" << endl;
+    cout << "Temps d'execution de l'insertion  : " << duration.count() << " secondes" << endl;
 }

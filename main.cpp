@@ -25,8 +25,6 @@ int main() {
     //mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
     //auto collection = conn["actiaDataBase"]["c++Collection"];
 
-
-
     // Insert a document
     /*bsoncxx::document::value doc_value = document{} << "name" << "John Doe" << "age" << 30 << finalize;
     bsoncxx::document::view doc_view = doc_value.view();

@@ -15,7 +15,7 @@
 #include "json/value.h"
 #include "json/writer.h"
 #include "pugixml.hpp"
-
+#include "../CREATE/CREATE.h"
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
 using bsoncxx::builder::stream::document;
@@ -36,7 +36,12 @@ void deleteOneDocument() {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
+
     getline(cin, collectionName);
+    if(!collectionExist(db, collectionName)){
+        cout << "La collection n'existe pas.\n";
+        return;
+    }
     mongocxx::collection collection = db[collectionName];
     cout << "Entrer l'ID du document a supprimer : ";
     string id;
@@ -63,6 +68,10 @@ void deleteAllDocuments() {
     cout << "Entrer le nom de la collection : ";
     string collectionName;
     getline(cin, collectionName);
+    if(!collectionExist(db, collectionName)){
+        cout << "La collection n'existe pas.\n";
+        return;
+    }
     mongocxx::collection collection = db[collectionName];
     collection.delete_many({});
     cout << "Tous les documents ont ete supprimes avec succes.\n";

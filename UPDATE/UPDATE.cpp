@@ -37,7 +37,6 @@ using namespace std;
 void updateOneDocument() {
     mongocxx::instance inst{};
     mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
-
     cout << "Entrez le nom de la collection ou se trouve le document : ";
     string collectionName;
     getline(cin, collectionName);
@@ -46,7 +45,6 @@ void updateOneDocument() {
         cout << "La collection n'existe pas.\n";
         return;
     }
-
     cout << "Entrez l'id du document : ";
     string id;
     getline(cin, id);
@@ -74,6 +72,9 @@ void updateOneDocument() {
         }
     }
 }
+
+
+
 
 /**
 * Cette fonction permet de modifier toutes les valeurs qui ont le type "Human" pour le remplacer par une nouvelle valeur

@@ -44,13 +44,8 @@ bool collectionExist(mongocxx::database database, string collectionName){
 * Cette fonction permet de créer une collection dans la base de données MongoDB
  * Elle permet de créer une collection dans la base de données actiaDataBase
 */
-void createCollection() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
-
+void createCollection(mongocxx::client& client) {
     mongocxx::database db = client["actiaDataBase"];
-
     std::string collectionName;
     std::cout << "Veuillez entrer le nom de la collection : ";
     std::getline(std::cin, collectionName);
@@ -166,6 +161,8 @@ void createOneDocumentJSON() {
     } else {
         std::cout << "Erreur lors de l'insertion du document.\n";
     }
+
+    db.drop();
 }
 
 /**
@@ -226,4 +223,6 @@ void createManyDocumentsJSON() {
     auto stop = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
     cout << "Temps d'execution de l'insertion  : " << duration.count() << " secondes" << endl;
+
+    db.drop();
 }

@@ -22,7 +22,11 @@ using bsoncxx::builder::stream::open_document;
 using namespace std;
 
 int main() {
+    mongocxx::instance instance{};
+    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
+    mongocxx::client client(uri);
     while (true) {
+
         std::cout << "\n========================================================\n";
         std::cout << "|| Programme de test de la base de donnees MongoDB    ||\n";
         std::cout << "========================================================\n";
@@ -57,7 +61,7 @@ int main() {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if(choixCreate == 1 ){
                 //Création de la collection
-                createCollection();
+                createCollection(client);
             }
             else if(choixCreate == 2){
                 //Création d'un document
@@ -179,6 +183,5 @@ int main() {
         }
 
     }
-
     return 0;
 }

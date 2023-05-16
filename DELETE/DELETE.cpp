@@ -78,8 +78,9 @@ void deleteAllDocuments() {
     //Chrono fin
     auto endChrono = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed = endChrono - startChrono;
-    cout << "Temps d'execution : " << elapsed.count() << " secondes" << endl;
+    cout << "Temps d'execution : " << elapsed.count() << " secondes\n";
 }
+
 
 
 

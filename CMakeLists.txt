@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.17)
+project(MongoDBCPlusPlus)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_GENERATOR_PLATFORM x64)
+
+#Include des directories C et C++
+include_directories("DriversMongoDB/mongo-cxx-driver-r3.7.0/mongo-cxx-driver-r3.7.0/build/install/include/mongocxx/v_noabi")
+include_directories("DriversMongoDB/mongo-cxx-driver-r3.7.0/mongo-cxx-driver-r3.7.0/build/install/include/bsoncxx/v_noabi")
+include_directories("DriversMongoDB/mongo-cxx-driver-r3.7.0/mongo-cxx-driver-r3.7.0/build/install/include/mongocxx/v_noabi/mongocxx")
+
+include_directories("C:/boost")
+
+link_directories("DriversMongoDB/mongo-cxx-driver-r3.7.0/mongo-cxx-driver-r3.7.0/build/install/lib")
+add_executable(MongoDBCPlusPlus main.cpp ConnectionMongoDB/connection.cpp ConnectionMongoDB/connection.h)
+
+target_link_libraries(MongoDBCPlusPlus mongocxx)
+target_link_libraries(MongoDBCPlusPlus bsoncxx)

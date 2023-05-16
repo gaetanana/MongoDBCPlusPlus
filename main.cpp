@@ -103,23 +103,23 @@ int main() {
 
             if(choixRead == 1){
                 //Lire la valeur d'un document
-                readOneDocument();
+                readOneDocument(client);
 
             }else if(choixRead == 2){
                 //Lire tous les documents d'une collection
-                readAllDocument();
+                readAllDocument(client);
             }
             else if(choixRead == 3){
-                readAllDocumentWithHuman();
+                readAllDocumentWithHuman(client);
             }
             else if(choixRead == 4){
-                readAllDocumentWithHumanProbability();
+                readAllDocumentWithHumanProbability(client);
             }
             else if(choixRead == 5){
-                readAllDocumentWithHumanProbabilityAndDate();
+                readAllDocumentWithHumanProbabilityAndDate(client);
             }
             else if(choixRead == 6){
-                readAllDocumentWithHumanProbabilityAndDateGender();
+                readAllDocumentWithHumanProbabilityAndDateGender(client);
             }
             else if(choixRead == 7){
                 std::cout << "\nVous avez quitté le menu Read\n";

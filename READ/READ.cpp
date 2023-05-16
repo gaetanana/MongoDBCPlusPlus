@@ -28,10 +28,7 @@ using namespace std;
 /**
  * Cette fonction permet de lire un document grâce à son ID
  */
-void readOneDocument() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
+void readOneDocument(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -57,10 +54,7 @@ void readOneDocument() {
 /**
  * Cette fonction permet de lire tous les documents d'une collection
  */
-void readAllDocument() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
+void readAllDocument(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -80,10 +74,7 @@ void readAllDocument() {
 /**
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human
  */
-void readAllDocumentWithHuman() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
+void readAllDocumentWithHuman(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -104,10 +95,7 @@ void readAllDocumentWithHuman() {
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
  * supérieure à 0.5
  */
-void readAllDocumentWithHumanProbability() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
+void readAllDocumentWithHumanProbability(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -133,10 +121,7 @@ void readAllDocumentWithHumanProbability() {
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
  * supérieure à 0.5 et supérieure à une date donnée dans le programme
  */
-void readAllDocumentWithHumanProbabilityAndDate() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
+void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -164,10 +149,7 @@ void readAllDocumentWithHumanProbabilityAndDate() {
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
  * supérieure à 0.5 et supérieure à une date donnée dans le programme ainsi que le genre de la personne doit "Male"
  */
-void readAllDocumentWithHumanProbabilityAndDateGender() {
-    mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
-    mongocxx::client client(uri);
+void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;

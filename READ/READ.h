@@ -6,9 +6,11 @@
 #define MONGODBCPLUSPLUS_READ_H
 
 #endif //MONGODBCPLUSPLUS_READ_H
-void readOneDocument();
-void readAllDocument();
-void readAllDocumentWithHuman();
-void readAllDocumentWithHumanProbability();
-void readAllDocumentWithHumanProbabilityAndDate();
-void readAllDocumentWithHumanProbabilityAndDateGender();
+
+#include <mongocxx/client.hpp>
+void readOneDocument(mongocxx::client &client);
+void readAllDocument(mongocxx::client &client);
+void readAllDocumentWithHuman(mongocxx::client &client);
+void readAllDocumentWithHumanProbability(mongocxx::client &client);
+void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client);
+void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client);

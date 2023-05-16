@@ -34,21 +34,21 @@ using namespace std;
  * Cette fonction modifie "Human" par une nouvelle valeur
  *
 */
-void updateOneDocument() {
-    mongocxx::instance inst{};
-    mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
+void updateOneDocument(mongocxx::client &client) {
+
+
     cout << "Entrez le nom de la collection ou se trouve le document : ";
     string collectionName;
     getline(cin, collectionName);
 
-    if (!collectionExist(conn["actiaDataBase"], collectionName)) {
+    if (!collectionExist(client["actiaDataBase"], collectionName)) {
         cout << "La collection n'existe pas.\n";
         return;
     }
     cout << "Entrez l'id du document : ";
     string id;
     getline(cin, id);
-    auto collection = conn["actiaDataBase"]["testCollection"];
+    auto collection = client["actiaDataBase"]["testCollection"];
 
     auto builder = bsoncxx::builder::stream::document{};
     bsoncxx::document::value query = builder
@@ -72,10 +72,6 @@ void updateOneDocument() {
         }
     }
 }
-
-
-
-
 /**
 * Cette fonction permet de modifier toutes les valeurs qui ont le type "Human" pour le remplacer par une nouvelle valeur
 */

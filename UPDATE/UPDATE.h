@@ -8,6 +8,8 @@
 #define MONGODBCPLUSPLUS_UPDATE_H
 
 #endif //MONGODBCPLUSPLUS_UPDATE_H
+#include <mongocxx/client.hpp>
 
-void updateAllHumanDocument();
-void updateOneDocument();
+
+void updateOneDocument(mongocxx::client &client);
+void updateAllHumanDocument(mongocxx::client &client);

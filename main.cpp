@@ -142,11 +142,11 @@ int main() {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if(choixUpdate == 1){
                 //Modifier la valeur Human d'un document
-                updateOneDocument();
+                updateOneDocument(client);
             }
             else if(choixUpdate == 2){
                 //Modifier toutes valeurs Human par une autre valeur
-                updateAllHumanDocument();
+                updateAllHumanDocument(client);
             }
             else if(choixUpdate == 3){
                 std::cout << "\nVous avez quitté le menu Update\n";
@@ -168,9 +168,9 @@ int main() {
             std::cin >> choixDelete;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if(choixDelete == 1){
-                deleteOneDocument();
+                deleteOneDocument(client);
             }else if(choixDelete == 2){
-                deleteAllDocuments();
+                deleteAllDocuments(client);
             }else if(choixDelete == 3){
                 std::cout << "\nVous avez quitté le menu Delete\n";
             }

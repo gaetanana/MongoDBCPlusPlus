@@ -8,3 +8,4 @@
 #endif //MONGODBCPLUSPLUS_CREATE_H
 
 void createCollection();
+void createOneDocumentJSON();

@@ -12,6 +12,7 @@
 #include "CREATE/CREATE.h"
 #include "DELETE/DELETE.h"
 #include "READ/READ.h"
+#include "UPDATE/UPDATE.h"
 
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
@@ -48,7 +49,6 @@ int main() {
     for(auto doc : cursor) {
         std::cout << bsoncxx::to_json(doc) << std::endl;
     }*/
-
     while (true) {
         std::cout << "\n========================================================\n";
         std::cout << "|| Programme de test de la base de donnees MongoDB    ||\n";

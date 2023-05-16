@@ -35,8 +35,6 @@ using namespace std;
  *
 */
 void updateOneDocument(mongocxx::client &client) {
-
-
     cout << "Entrez le nom de la collection ou se trouve le document : ";
     string collectionName;
     getline(cin, collectionName);
@@ -75,11 +73,10 @@ void updateOneDocument(mongocxx::client &client) {
 /**
 * Cette fonction permet de modifier toutes les valeurs qui ont le type "Human" pour le remplacer par une nouvelle valeur
 */
-void updateAllHumanDocument() {
+void updateAllHumanDocument(mongocxx::client &client) {
     //Chrono
     auto start = std::chrono::system_clock::now();
-    mongocxx::instance inst{};
-    mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};
+
 
     // Demander à l'utilisateur le nom de la collection
     std::string collectionName;
@@ -91,7 +88,7 @@ void updateAllHumanDocument() {
     std::cout << "Entrez la nouvelle valeur pour remplacer 'Human': ";
     std::getline(std::cin, newType);
 
-    auto collection = conn["actiaDataBase"][collectionName]; // Remplacer "database" par le nom de votre base de données
+    auto collection = client["actiaDataBase"][collectionName]; // Remplacer "database" par le nom de votre base de données
 
     auto cursor = collection.find({});
 

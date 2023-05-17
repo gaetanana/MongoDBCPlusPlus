@@ -16,6 +16,7 @@
 #include "json/writer.h"
 #include "pugixml.hpp"
 #include "../CREATE/CREATE.h"
+#include <chrono>
 
 using bsoncxx::builder::stream::close_array;
 using bsoncxx::builder::stream::close_document;
@@ -55,6 +56,10 @@ void readOneDocument(mongocxx::client &client) {
  * Cette fonction permet de lire tous les documents d'une collection
  */
 void readAllDocument(mongocxx::client &client) {
+    //Chrono
+    auto startChrono = chrono::high_resolution_clock::now();
+    int nbDocuments = 0;
+
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -67,8 +72,17 @@ void readAllDocument(mongocxx::client &client) {
     mongocxx::collection collection = db[collectionName];
     mongocxx::cursor cursor = collection.find({});
     for (auto doc: cursor) {
-        cout << bsoncxx::to_json(doc) << "\n";
+        //cout << bsoncxx::to_json(doc) << "\n";
+        //Affiche uniquement l'id du document
+        cout << doc["_id"].get_oid().value.to_string() << "\n";
+        nbDocuments++;
     }
+    cout << "Nombre de documents : " << nbDocuments << "\n";
+    //Fin chrono
+    auto endChrono = chrono::high_resolution_clock::now();
+    auto durationChrono = chrono::duration_cast<chrono::microseconds>(endChrono - startChrono);
+    cout << "Temps d'execution : " << durationChrono.count() << " microsecondes\n";
+
 }
 
 /**

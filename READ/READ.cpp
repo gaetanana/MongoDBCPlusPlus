@@ -89,6 +89,10 @@ void readAllDocument(mongocxx::client &client) {
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human
  */
 void readAllDocumentWithHuman(mongocxx::client &client) {
+    //Chrono
+    auto startChrono = chrono::high_resolution_clock::now();
+    int nbDocuments = 0;
+
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -99,10 +103,18 @@ void readAllDocumentWithHuman(mongocxx::client &client) {
         return;
     }
     mongocxx::collection collection = db[collectionName];
-    auto cursor = collection.find(document{} << "type" << "Human" << finalize);
+    auto cursor = collection.find(document{} << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value" << "Human" << finalize);
     for (auto doc: cursor) {
-        cout << bsoncxx::to_json(doc) << "\n";
+        //Affiche uniquement l'id du document
+        cout << doc["_id"].get_oid().value.to_string() << "\n";
+        nbDocuments++;
     }
+    cout << "Nombre de documents : " << nbDocuments << "\n";
+    //Fin chrono
+    auto endChrono = chrono::high_resolution_clock::now();
+    auto durationChrono = chrono::duration_cast<chrono::microseconds>(endChrono - startChrono);
+    cout << "Temps d'execution : " << durationChrono.count() << " microsecondes\n";
+
 }
 
 /**

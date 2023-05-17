@@ -103,7 +103,9 @@ void readAllDocumentWithHuman(mongocxx::client &client) {
         return;
     }
     mongocxx::collection collection = db[collectionName];
-    auto cursor = collection.find(document{} << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value" << "Human" << finalize);
+    auto cursor = collection.find(
+            document{} << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
+                       << "Human" << finalize);
     for (auto doc: cursor) {
         //Affiche uniquement l'id du document
         cout << doc["_id"].get_oid().value.to_string() << "\n";
@@ -122,6 +124,8 @@ void readAllDocumentWithHuman(mongocxx::client &client) {
  * supérieure à 0.5
  */
 void readAllDocumentWithHumanProbability(mongocxx::client &client) {
+    auto start = chrono::high_resolution_clock::now();
+    int nbDocs = 0;
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -132,16 +136,40 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
         return;
     }
     mongocxx::collection collection = db[collectionName];
+    auto cursor = collection.find({});
 
-    // Modify the query to filter documents with type Human and probability greater than 0.5
-    auto cursor = collection.find(
-            document{} << "type" << "Human" << "probability" << open_document << "$gt" << 0.5 << close_document
-                       << finalize);
-
-    for (auto doc: cursor) {
-        cout << bsoncxx::to_json(doc) << "\n";
+    for (auto doc : cursor) {
+        auto analytics = doc["tt:VideoAnalytics"];
+        if (analytics && analytics.type() == bsoncxx::type::k_array) {
+            for (auto frame : analytics.get_array().value) {
+                auto objects = frame["tt:Frame"][0]["tt:Object"];
+                if (objects && objects.type() == bsoncxx::type::k_array) {
+                    for (auto appearance : objects.get_array().value) {
+                        auto classes = appearance["tt:Appearance"][0]["tt:Class"];
+                        if (classes && classes.type() == bsoncxx::type::k_array) {
+                            for (auto type : classes.get_array().value) {
+                                auto typeVal = type["tt:Type"][0]["value"];
+                                auto likelihood = type["tt:Type"][0]["attributes"]["Likelihood"];
+                                if (typeVal && likelihood && likelihood.type() == bsoncxx::type::k_utf8 &&
+                                    typeVal.get_utf8().value.to_string() == "Human" &&
+                                    stod(likelihood.get_utf8().value.to_string()) > 0.5) {
+                                    nbDocs++;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    auto finish = chrono::high_resolution_clock::now();
+    chrono::duration<double> elapsed = finish - start;
+    cout << "Nombre de documents : " << nbDocs << endl;
+    cout << "Temps d'execution : " << chrono::duration_cast<chrono::microseconds>(elapsed).count() << " microsecondes\n";
 }
+
 
 /**
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
@@ -171,6 +199,7 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
         cout << bsoncxx::to_json(doc) << "\n";
     }
 }
+
 /**
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
  * supérieure à 0.5 et supérieure à une date donnée dans le programme ainsi que le genre de la personne doit "Male"

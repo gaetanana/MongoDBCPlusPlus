@@ -174,6 +174,7 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
     long totalTimeConversionXMLToJSON = 0;
+    long totalInsertDocument = 0;
 
     std::string collectionName;
     std::cout << "Veuillez entrer le nom de la collection : ";
@@ -192,6 +193,7 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     std::cout << "Traitement en cour . . .";
     for (const auto& entry : std::filesystem::directory_iterator(dirPath)) {
         if (entry.path().extension() == ".xml") {
+
             std::ifstream file(entry.path());
             if (!file) {
                 std::cout << "Erreur lors de l'ouverture du fichier " << entry.path() << ".\n";
@@ -209,6 +211,7 @@ void createManyDocumentsJSON(mongocxx::client& client) {
             bsoncxx::stdx::optional<mongocxx::result::insert_one> resultInsert = coll.insert_one(document.view());
 
             if(resultInsert) {
+                totalInsertDocument++;
                 //std::cout << "Document insere avec succes pour le fichier " << entry.path() << ".\n";
                 //Fin du chrono
             } else {
@@ -220,5 +223,6 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
     cout << "Temps d'execution de l'insertion  : " << duration.count() << " secondes" << endl;
     cout << "Temps total de conversion XML vers JSON : " << totalTimeConversionXMLToJSON << " microsecondes" << endl;
+    cout << "Nombre de documents inseres : " << totalInsertDocument << endl;
 
 }

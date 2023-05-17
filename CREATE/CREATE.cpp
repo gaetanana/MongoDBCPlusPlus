@@ -91,18 +91,16 @@ Json::Value xmlNodeToJson(const pugi::xml_node& xmlNode){
 }
 
 
-string xmlToJson(string xml){
+std::pair<string, long long> xmlToJson(string xml){
     //Chrono pour mesurer le temps d'exécution
     auto start = chrono::high_resolution_clock::now();
-
 
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_string(xml.c_str());
     if (!result) {
         std::cout << "Erreur lors du chargement du fichier XML : " << result.description() << "\n";
-        return "";
+        return std::make_pair("", 0);
     }
-
     pugi::xml_node root = doc.document_element();
 
     Json::Value rootJson = xmlNodeToJson(root);
@@ -113,8 +111,9 @@ string xmlToJson(string xml){
 
     auto stop = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-    cout << "Temps d'exécution de la conversion : " << duration.count() << " microsecondes" << endl;
-    return jsonStr;
+    //cout << "Temps d'exécution de la conversion : " << duration.count() << " microsecondes" << endl;
+
+    return std::make_pair(jsonStr, duration.count());
 }
 
 /**
@@ -146,19 +145,21 @@ void createOneDocumentJSON(mongocxx::client& client) {
     buffer << file.rdbuf();
     std::string xmlStr = buffer.str();
 
-    std::string jsonStr = xmlToJson(xmlStr); // Conversion du XML en JSON
-
+    auto result = xmlToJson(xmlStr);
+    string jsonStr = result.first;
+    long long duration = result.second;
+    cout << "Temps d'éxecution de la conversion :  " << duration << " microsecondes" << endl;
     bsoncxx::document::value document = bsoncxx::from_json(jsonStr);
 
-    bsoncxx::stdx::optional<mongocxx::result::insert_one> result = coll.insert_one(document.view());
+    bsoncxx::stdx::optional<mongocxx::result::insert_one> resultInsert = coll.insert_one(document.view());
 
-    if(result) {
+    if(resultInsert) {
         std::cout << "Document inséré avec succès.\n";
     } else {
         std::cout << "Erreur lors de l'insertion du document.\n";
     }
 
-    db.drop();
+
 }
 
 /**
@@ -172,6 +173,7 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     auto start = chrono::high_resolution_clock::now();
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
+    long totalTimeConversionXMLToJSON = 0;
 
     std::string collectionName;
     std::cout << "Veuillez entrer le nom de la collection : ";
@@ -187,6 +189,7 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     std::cout << "Veuillez entrer le chemin absolu vers le dossier contenant les fichiers XML : ";
     std::getline(std::cin, dirPath);
 
+    std::cout << "Traitement en cour . . .";
     for (const auto& entry : std::filesystem::directory_iterator(dirPath)) {
         if (entry.path().extension() == ".xml") {
             std::ifstream file(entry.path());
@@ -197,14 +200,15 @@ void createManyDocumentsJSON(mongocxx::client& client) {
             std::stringstream buffer;
             buffer << file.rdbuf();
             std::string xmlStr = buffer.str();
-
-            std::string jsonStr = xmlToJson(xmlStr); // Conversion du XML en JSON
-
+            auto result = xmlToJson(xmlStr);
+            string jsonStr = result.first;
+            long long duration = result.second;
+            totalTimeConversionXMLToJSON += duration;
             bsoncxx::document::value document = bsoncxx::from_json(jsonStr);
 
-            bsoncxx::stdx::optional<mongocxx::result::insert_one> result = coll.insert_one(document.view());
+            bsoncxx::stdx::optional<mongocxx::result::insert_one> resultInsert = coll.insert_one(document.view());
 
-            if(result) {
+            if(resultInsert) {
                 //std::cout << "Document insere avec succes pour le fichier " << entry.path() << ".\n";
                 //Fin du chrono
             } else {
@@ -215,6 +219,6 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     auto stop = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
     cout << "Temps d'execution de l'insertion  : " << duration.count() << " secondes" << endl;
+    cout << "Temps total de conversion XML vers JSON : " << totalTimeConversionXMLToJSON << " microsecondes" << endl;
 
-    db.drop();
 }

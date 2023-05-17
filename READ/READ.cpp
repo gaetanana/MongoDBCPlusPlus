@@ -163,7 +163,6 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
             }
         }
     }
-
     auto finish = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed = finish - start;
     cout << "Nombre de documents : " << nbDocs << endl;

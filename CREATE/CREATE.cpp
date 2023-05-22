@@ -224,5 +224,4 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     cout << "Temps d'execution de l'insertion  : " << duration.count() << " secondes" << endl;
     cout << "Temps total de conversion XML vers JSON : " << totalTimeConversionXMLToJSON << " microsecondes" << endl;
     cout << "Nombre de documents inseres : " << totalInsertDocument << endl;
-
 }

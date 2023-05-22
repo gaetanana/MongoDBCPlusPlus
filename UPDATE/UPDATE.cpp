@@ -146,7 +146,6 @@ void updateAllKeyTypeContent(mongocxx::client &client) {
 
     // Update all documents
     collection.update_many({}, update_doc.view());
-
     //Chrono fin
     auto finish = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = finish - start;

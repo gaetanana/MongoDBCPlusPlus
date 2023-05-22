@@ -133,7 +133,9 @@ int main() {
             std::cout << "||                                                                   ||\n";
             std::cout << "|| 1 - Modifier la valeur Human d'un document                        ||\n";
             std::cout << "|| 2 - Modifier toutes valeurs Human par une autre valeur            ||\n";
-            std::cout << "|| 3 - Quitter le menu Update                                        ||\n";
+            std::cout << "|| 3 - Modifier toutes les valeurs des documents (remplace le Type   ||\n"
+                         "||     par une autre valeur qui est generalement Human)              ||\n";
+            std::cout << "|| 4 - Quitter le menu Update                                        ||\n";
             std::cout << "||                                                                   ||\n";
             std::cout << "=======================================================================\n";
             int choixUpdate;
@@ -147,8 +149,11 @@ int main() {
             else if(choixUpdate == 2){
                 //Modifier toutes valeurs Human par une autre valeur
                 updateAllHumanDocument(client);
+            }else if(choixUpdate == 3){
+                //Modifier toutes les valeurs des documents (remplace le Type par une autre valeur qui est generalement Human)
+                updateAllKeyTypeContent(client);
             }
-            else if(choixUpdate == 3){
+            else if(choixUpdate == 4){
                 std::cout << "\nVous avez quitté le menu Update\n";
             }
         }

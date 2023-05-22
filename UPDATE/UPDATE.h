@@ -13,3 +13,4 @@
 
 void updateOneDocument(mongocxx::client &client);
 void updateAllHumanDocument(mongocxx::client &client);
+void updateAllKeyTypeContent(mongocxx::client &client);

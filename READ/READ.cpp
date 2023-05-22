@@ -185,17 +185,36 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
     }
     mongocxx::collection collection = db[collectionName];
 
-    // Define the given date (modify as needed)
-    std::string given_date = "2023-05-16";
+    auto cursor = collection.find({});
 
-    // Modify the query to filter documents with type Human, probability greater than 0.5, and date greater than the given date
-    auto cursor = collection.find(
-            document{} << "type" << "Human" << "probability" << open_document << "$gt" << 0.5 << close_document
-                       << "date" << open_document << "$gt" << given_date << close_document << finalize);
-
-    for (auto doc: cursor) {
-        cout << bsoncxx::to_json(doc) << "\n";
+    int documentCount = 0;
+    for (auto&& doc : cursor) {
+        auto videoAnalytics = doc["tt:VideoAnalytics"].get_array().value;
+        for (auto&& analytics : videoAnalytics) {
+            auto frames = analytics["tt:Frame"].get_array().value;
+            for (auto&& frame : frames) {
+                auto objects = frame["tt:Object"].get_array().value;
+                for (auto&& object : objects) {
+                    auto appearances = object["tt:Appearance"].get_array().value;
+                    for (auto&& appearance : appearances) {
+                        auto classes = appearance["tt:Class"].get_array().value;
+                        for (auto&& cls : classes) {
+                            auto types = cls["tt:Type"].get_array().value;
+                            for (auto&& type : types) {
+                                std::string valueType = type["value"].get_utf8().value.to_string();
+                                double valueLikelihood = std::stod(type["attributes"]["Likelihood"].get_utf8().value.to_string());
+                                std::string utcTime = frame["UtcTime"].get_utf8().value.to_string();
+                                if (valueType == "Human" && valueLikelihood > 0.5 && utcTime > "2023-04-21T14:45:23") {
+                                    documentCount++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+    cout << "Nombre de documents: " << documentCount << "\n";
 }
 
 /**

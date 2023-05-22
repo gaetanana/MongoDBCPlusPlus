@@ -234,6 +234,8 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
  * Elle permet de filtrer le genre Masculin
  */
 void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) {
+    //Chrono
+    auto start = chrono::high_resolution_clock::now();
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -244,9 +246,7 @@ void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) 
         return;
     }
     mongocxx::collection collection = db[collectionName];
-
     auto cursor = collection.find({});
-
     int documentCount = 0;
     for (auto &&doc: cursor) {
         auto videoAnalytics = doc["tt:VideoAnalytics"].get_array().value;
@@ -288,6 +288,10 @@ void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) 
             }
         }
     }
-
     cout << "Nombre de documents: " << documentCount << "\n";
+    auto finish = chrono::high_resolution_clock::now();
+    chrono::duration<double> elapsed = finish - start;
+    cout << "Temps d'execution : " << chrono::duration_cast<chrono::microseconds>(elapsed).count()
+         << " microsecondes\n";
+
 }

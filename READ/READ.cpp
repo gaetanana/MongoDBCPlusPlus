@@ -116,7 +116,6 @@ void readAllDocumentWithHuman(mongocxx::client &client) {
     auto endChrono = chrono::high_resolution_clock::now();
     auto durationChrono = chrono::duration_cast<chrono::microseconds>(endChrono - startChrono);
     cout << "Temps d'execution : " << durationChrono.count() << " microsecondes\n";
-
 }
 
 /**
@@ -137,8 +136,7 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
     }
     mongocxx::collection collection = db[collectionName];
     auto cursor = collection.find({});
-
-    for (auto doc : cursor) {
+    for (auto doc: cursor) {
         auto analytics = doc["tt:VideoAnalytics"];
         if (analytics && analytics.type() == bsoncxx::type::k_array) {
             for (auto frame : analytics.get_array().value) {
@@ -147,15 +145,17 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
                     for (auto appearance : objects.get_array().value) {
                         auto classes = appearance["tt:Appearance"][0]["tt:Class"];
                         if (classes && classes.type() == bsoncxx::type::k_array) {
-                            for (auto type : classes.get_array().value) {
+                            bool hasHumanWithHighLikelihood = std::any_of(classes.get_array().value.begin(), classes.get_array().value.end(), [](auto type) {
                                 auto typeVal = type["tt:Type"][0]["value"];
                                 auto likelihood = type["tt:Type"][0]["attributes"]["Likelihood"];
-                                if (typeVal && likelihood && likelihood.type() == bsoncxx::type::k_utf8 &&
-                                    typeVal.get_utf8().value.to_string() == "Human" &&
-                                    stod(likelihood.get_utf8().value.to_string()) > 0.5) {
-                                    nbDocs++;
-                                    break;
-                                }
+                                return typeVal && likelihood && likelihood.type() == bsoncxx::type::k_utf8 &&
+                                       typeVal.get_utf8().value.to_string() == "Human" &&
+                                       stod(likelihood.get_utf8().value.to_string()) >= 0.50;
+                            });
+
+                            if (hasHumanWithHighLikelihood) {
+                                nbDocs++;
+                                break;
                             }
                         }
                     }
@@ -163,13 +163,12 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
             }
         }
     }
+
     auto finish = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed = finish - start;
     cout << "Nombre de documents : " << nbDocs << endl;
     cout << "Temps d'execution : " << chrono::duration_cast<chrono::microseconds>(elapsed).count() << " microsecondes\n";
 }
-
-
 /**
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
  * supérieure à 0.5 et supérieure à une date donnée dans le programme

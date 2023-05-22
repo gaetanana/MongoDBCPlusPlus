@@ -78,7 +78,7 @@ void updateAllHumanDocument(mongocxx::client &client) {
     auto start = std::chrono::high_resolution_clock::now();
 
     // Specify the database and collection in which you want to update the documents
-    cout << "Nom de la collection : ";
+    cout << "Entrez le nom de la collection ou se trouve les documents : ";
     string collectionName;
     getline(cin, collectionName);
 
@@ -118,8 +118,11 @@ void updateAllHumanDocument(mongocxx::client &client) {
  * Cette fonction permet de modifier toutes les valeurs de Type pour les remplacer par une nouvelle valeur (par exemple : "Human" par "Car")
  */
 void updateAllKeyTypeContent(mongocxx::client &client) {
+    //Chrono
+    auto start = std::chrono::high_resolution_clock::now();
+
     // Specify the database and collection in which you want to update the documents
-    cout << "Entrez le nom de la collection où se trouve le document : ";
+    cout << "Entrez le nom de la collection ou se trouve le document : ";
     string collectionName;
     getline(cin, collectionName);
 
@@ -130,19 +133,10 @@ void updateAllKeyTypeContent(mongocxx::client &client) {
 
     auto collection = client["actiaDataBase"][collectionName];
 
-    // Ask the old and new values from the user
-    cout << "Entrez la valeur actuelle à remplacer : ";
-    string oldValue;
-    getline(cin, oldValue);
-
+    // Ask the new value from the user
     cout << "Entrez la nouvelle valeur : ";
     string newValue;
     getline(cin, newValue);
-
-    // Create the filter document
-    bsoncxx::builder::stream::document filter_doc;
-    filter_doc << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
-               << oldValue;
 
     // Create the update document
     bsoncxx::builder::stream::document update_doc;
@@ -150,6 +144,18 @@ void updateAllKeyTypeContent(mongocxx::client &client) {
                << bsoncxx::builder::stream::open_document << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
                << newValue << bsoncxx::builder::stream::close_document;
 
-    // Update all documents that match the filter
-    collection.update_many(filter_doc.view(), update_doc.view());
+    // Update all documents
+    collection.update_many({}, update_doc.view());
+
+    //Chrono fin
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    cout << "Temps d'execution : " << elapsed.count() << " s\n";
+
 }
+
+
+
+
+
+

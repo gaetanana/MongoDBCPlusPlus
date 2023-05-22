@@ -182,6 +182,8 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
  * supérieure à 0.5 et supérieure à une date donnée dans le programme
  */
 void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
+    //Chrono
+    auto startChrono = chrono::high_resolution_clock::now();
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -194,7 +196,6 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
     mongocxx::collection collection = db[collectionName];
 
     auto cursor = collection.find({});
-
     int documentCount = 0;
     for (auto &&doc: cursor) {
         auto videoAnalytics = doc["tt:VideoAnalytics"].get_array().value;
@@ -224,6 +225,11 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
         }
     }
     cout << "Nombre de documents: " << documentCount << "\n";
+    //Fin chrono
+    auto endChrono = chrono::high_resolution_clock::now();
+    auto durationChrono = chrono::duration_cast<chrono::microseconds>(endChrono - startChrono);
+    cout << "Temps d'execution : " << durationChrono.count() << " microsecondes\n";
+
 }
 
 /**
@@ -265,8 +271,6 @@ void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) 
                                 double valueLikelihood = std::stod(
                                         type["attributes"]["Likelihood"].get_utf8().value.to_string());
                                 std::string utcTime = frame["UtcTime"].get_utf8().value.to_string();
-
-
                                 if (appearance["tt:Extension"] &&
                                     appearance["tt:Extension"].get_array().value[0]["HumanFace"] &&
                                     appearance["tt:Extension"].get_array().value[0]["HumanFace"].get_array().value[0]["Gender"] &&

@@ -139,19 +139,25 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
     for (auto doc: cursor) {
         auto analytics = doc["tt:VideoAnalytics"];
         if (analytics && analytics.type() == bsoncxx::type::k_array) {
-            for (auto frame : analytics.get_array().value) {
+            for (auto frame: analytics.get_array().value) {
                 auto objects = frame["tt:Frame"][0]["tt:Object"];
                 if (objects && objects.type() == bsoncxx::type::k_array) {
-                    for (auto appearance : objects.get_array().value) {
+                    for (auto appearance: objects.get_array().value) {
                         auto classes = appearance["tt:Appearance"][0]["tt:Class"];
                         if (classes && classes.type() == bsoncxx::type::k_array) {
-                            bool hasHumanWithHighLikelihood = std::any_of(classes.get_array().value.begin(), classes.get_array().value.end(), [](auto type) {
-                                auto typeVal = type["tt:Type"][0]["value"];
-                                auto likelihood = type["tt:Type"][0]["attributes"]["Likelihood"];
-                                return typeVal && likelihood && likelihood.type() == bsoncxx::type::k_utf8 &&
-                                       typeVal.get_utf8().value.to_string() == "Human" &&
-                                       stod(likelihood.get_utf8().value.to_string()) >= 0.50;
-                            });
+                            bool hasHumanWithHighLikelihood = std::any_of(classes.get_array().value.begin(),
+                                                                          classes.get_array().value.end(),
+                                                                          [](auto type) {
+                                                                              auto typeVal = type["tt:Type"][0]["value"];
+                                                                              auto likelihood = type["tt:Type"][0]["attributes"]["Likelihood"];
+                                                                              return typeVal && likelihood &&
+                                                                                     likelihood.type() ==
+                                                                                     bsoncxx::type::k_utf8 &&
+                                                                                     typeVal.get_utf8().value.to_string() ==
+                                                                                     "Human" &&
+                                                                                     stod(likelihood.get_utf8().value.to_string()) >=
+                                                                                     0.50;
+                                                                          });
 
                             if (hasHumanWithHighLikelihood) {
                                 nbDocs++;
@@ -167,8 +173,10 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
     auto finish = chrono::high_resolution_clock::now();
     chrono::duration<double> elapsed = finish - start;
     cout << "Nombre de documents : " << nbDocs << endl;
-    cout << "Temps d'execution : " << chrono::duration_cast<chrono::microseconds>(elapsed).count() << " microsecondes\n";
+    cout << "Temps d'execution : " << chrono::duration_cast<chrono::microseconds>(elapsed).count()
+         << " microsecondes\n";
 }
+
 /**
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
  * supérieure à 0.5 et supérieure à une date donnée dans le programme
@@ -188,21 +196,22 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
     auto cursor = collection.find({});
 
     int documentCount = 0;
-    for (auto&& doc : cursor) {
+    for (auto &&doc: cursor) {
         auto videoAnalytics = doc["tt:VideoAnalytics"].get_array().value;
-        for (auto&& analytics : videoAnalytics) {
+        for (auto &&analytics: videoAnalytics) {
             auto frames = analytics["tt:Frame"].get_array().value;
-            for (auto&& frame : frames) {
+            for (auto &&frame: frames) {
                 auto objects = frame["tt:Object"].get_array().value;
-                for (auto&& object : objects) {
+                for (auto &&object: objects) {
                     auto appearances = object["tt:Appearance"].get_array().value;
-                    for (auto&& appearance : appearances) {
+                    for (auto &&appearance: appearances) {
                         auto classes = appearance["tt:Class"].get_array().value;
-                        for (auto&& cls : classes) {
+                        for (auto &&cls: classes) {
                             auto types = cls["tt:Type"].get_array().value;
-                            for (auto&& type : types) {
+                            for (auto &&type: types) {
                                 std::string valueType = type["value"].get_utf8().value.to_string();
-                                double valueLikelihood = std::stod(type["attributes"]["Likelihood"].get_utf8().value.to_string());
+                                double valueLikelihood = std::stod(
+                                        type["attributes"]["Likelihood"].get_utf8().value.to_string());
                                 std::string utcTime = frame["UtcTime"].get_utf8().value.to_string();
                                 if (valueType == "Human" && valueLikelihood > 0.5 && utcTime > "2023-04-21T14:45:23") {
                                     documentCount++;
@@ -218,26 +227,67 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
 }
 
 /**
- * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
- * supérieure à 0.5 et supérieure à une date donnée dans le programme ainsi que le genre de la personne doit "Male"
+ * Cette fonction permet de lire tout les documents d'une collection avec un type Human et une probabilité
+ * Elle permet de filtrer les documents qui possèdent le type "Human"
+ * Elle permet de filtrer les documents qui possèdent une probabilité supérieure à 0.5
+ * Elle permet de filtrer les documents qui possèdent une date supérieure à une date donnée dans le programme
+ * Elle permet de filtrer le genre Masculin
  */
 void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) {
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
+
     getline(cin, collectionName);
     if (!collectionExist(db, collectionName)) {
         cout << "La collection n'existe pas.\n";
         return;
     }
     mongocxx::collection collection = db[collectionName];
-    std::string given_date = "2023-05-16";
-    auto cursor = collection.find(
-            document{} << "type" << "Human" << "probability" << open_document << "$gt" << 0.5 << close_document
-                       << "date" << open_document << "$gt" << given_date << close_document << "gender" << "Male"
-                       << finalize);
 
-    for (auto doc: cursor) {
-        cout << bsoncxx::to_json(doc) << "\n";
+    auto cursor = collection.find({});
+
+    int documentCount = 0;
+    for (auto &&doc: cursor) {
+        auto videoAnalytics = doc["tt:VideoAnalytics"].get_array().value;
+        for (auto &&analytics: videoAnalytics) {
+            auto frames = analytics["tt:Frame"].get_array().value;
+            for (auto &&frame: frames) {
+                auto objects = frame["tt:Object"].get_array().value;
+                for (auto &&object: objects) {
+                    auto appearances = object["tt:Appearance"].get_array().value;
+                    for (auto &&appearance: appearances) {
+                        auto classes = appearance["tt:Class"].get_array().value;
+                        for (auto &&cls: classes) {
+                            auto types = cls["tt:Type"].get_array().value;
+                            for (auto &&type: types) {
+                                std::string valueType = type["value"].get_utf8().value.to_string();
+                                double valueLikelihood = std::stod(
+                                        type["attributes"]["Likelihood"].get_utf8().value.to_string());
+                                std::string utcTime = frame["UtcTime"].get_utf8().value.to_string();
+
+
+                                if (appearance["tt:Extension"] &&
+                                    appearance["tt:Extension"].get_array().value[0]["HumanFace"] &&
+                                    appearance["tt:Extension"].get_array().value[0]["HumanFace"].get_array().value[0]["Gender"] &&
+                                    appearance["tt:Extension"].get_array().value[0]["HumanFace"].get_array().value[0]["Gender"].get_array().value[0]["Male"] &&
+                                    !appearance["tt:Extension"].get_array().value[0]["HumanFace"].get_array().value[0]["Gender"].get_array().value[0]["Male"].get_array().value[0]["value"].get_utf8().value.empty()) {
+
+                                    double valueGender = std::stod(
+                                            appearance["tt:Extension"].get_array().value[0]["HumanFace"].get_array().value[0]["Gender"].get_array().value[0]["Male"].get_array().value[0]["value"].get_utf8().value.to_string());
+                                    if (valueType == "Human" && valueLikelihood > 0.5 && utcTime > "2023-05-16" &&
+                                        valueGender > 0.5) {
+                                        cout << doc["_id"].get_oid().value.to_string() << "\n";
+                                        documentCount++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    cout << "Nombre de documents: " << documentCount << "\n";
 }

@@ -27,40 +27,41 @@ using bsoncxx::builder::stream::open_document;
 using namespace std;
 /**
  * Cette fonction permet de savoir si une collection existe dans la base de données
- *
  */
 bool collectionExist(mongocxx::database database, string collectionName){
-    auto cursor = database.list_collections();
+    auto cursor = database.list_collections(); //Cursor sur la liste des collections
+    //On parcourt le cursor
     for (auto&& doc : cursor) {
+        //Si le nom de la collection est le même que celui entré en paramètre alors on retourne true
         if (doc["name"].get_utf8().value.to_string() == collectionName) {
             return true;
         }
     }
     return false;
 }
-
-
 /**
 * Cette fonction permet de créer une collection dans la base de données MongoDB
  * Elle permet de créer une collection dans la base de données actiaDataBase
 */
 void createCollection(mongocxx::client& client) {
-    mongocxx::database db = client["actiaDataBase"];
+    mongocxx::database db = client["actiaDataBase"]; //On récupère la base de données actiaDataBase
+    //On demande à l'utilisateur d'entrer le nom de la collection
     std::string collectionName;
     std::cout << "Veuillez entrer le nom de la collection : ";
     std::getline(std::cin, collectionName);
-
+    //Vérifie si la collection existe déjà
     if(collectionExist(db, collectionName)){
         std::cout << "La collection existe deja.\n";
         return;
     }
-
+    //Création de la collection
     bsoncxx::document::value create_collection_cmd =
             bsoncxx::builder::stream::document{}
                     << "create" << collectionName
                     << bsoncxx::builder::stream::finalize;
-
+    //On exécute la commande
     db.run_command(create_collection_cmd.view());
+    //On affiche un message de confirmation de la création de la collection
     std::cout << "Collection " << collectionName << " créée avec succès.\n";
 }
 

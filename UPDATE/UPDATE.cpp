@@ -74,55 +74,82 @@ void updateOneDocument(mongocxx::client &client) {
 * Cette fonction permet de modifier toutes les valeurs qui ont le type "Human" pour le remplacer par une nouvelle valeur
 */
 void updateAllHumanDocument(mongocxx::client &client) {
-    // Chrono
-    auto start = std::chrono::system_clock::now();
-    // Demander à l'utilisateur le nom de la collection
-    std::string collectionName;
-    std::cout << "Entrez le nom de la collection: ";
-    std::getline(std::cin, collectionName);
-    // Demander à l'utilisateur la nouvelle valeur
-    std::string newType;
-    std::cout << "Entrez la nouvelle valeur pour remplacer 'Human': ";
-    std::getline(std::cin, newType);
-    auto collection = client["actiaDataBase"][collectionName];
-    auto cursor = collection.find({});
-    for(auto doc_view : cursor) {
-        bool isUpdated = false;
-        auto videoAnalytics = doc_view["tt:VideoAnalytics"].get_array().value;
-        for(auto& frameDoc : videoAnalytics) {
-            auto frame = frameDoc.get_document().value["tt:Frame"].get_array().value;
-            for(auto& objectDoc : frame) {
-                auto object = objectDoc.get_document().value["tt:Object"].get_array().value;
-                for(auto& appearanceDoc : object) {
-                    auto appearance = appearanceDoc.get_document().value["tt:Appearance"].get_array().value;
-                    for(auto& classDoc : appearance) {
-                        auto classData = classDoc.get_document().value["tt:Class"].get_array().value;
-                        for(auto& typeDoc : classData) {
-                            auto type = typeDoc.get_document().value["tt:Type"].get_array().value;
-                            for(auto& typeFieldDoc : type) {
-                                auto typeField = typeFieldDoc.get_document().value;
-                                if(typeField["value"].get_utf8().value.to_string() == "Human") {
-                                    typeFieldDoc.get_document().value["value"] = bsoncxx::types::b_utf8{newType};
-                                    isUpdated = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if(isUpdated) {
-            bsoncxx::builder::stream::document newDoc{};
-            newDoc << "tt:VideoAnalytics" << videoAnalytics;
-            bsoncxx::builder::stream::document replace_doc{};
-            replace_doc << "$set" << newDoc;
-            bsoncxx::builder::stream::document filter_doc{};
-            filter_doc << "_id" << doc_view["_id"].get_oid().value;
-            collection.find_one_and_replace(filter_doc.view(), replace_doc.view());
-        }
+    //Chrono
+    auto start = std::chrono::high_resolution_clock::now();
+
+    // Specify the database and collection in which you want to update the documents
+    cout << "Nom de la collection : ";
+    string collectionName;
+    getline(cin, collectionName);
+
+    if(!collectionExist(client["actiaDataBase"], collectionName)){
+        cout << "La collection n'existe pas.\n";
+        return;
     }
-    // Fin chrono
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds = end-start;
-    std::cout << "Temps d'execution : " << elapsed_seconds.count() << "s\n";
+
+    auto collection = client["actiaDataBase"][collectionName];
+
+    // Create the filter document
+    bsoncxx::builder::stream::document filter_doc;
+    filter_doc << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
+               << "Human";
+
+    // Ask the new value from the user
+    cout << "Entrez la nouvelle valeur : ";
+    string newValue;
+    getline(cin, newValue);
+
+    // Create the update document
+    bsoncxx::builder::stream::document update_doc;
+    update_doc << "$set"
+               << bsoncxx::builder::stream::open_document << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
+               << newValue << bsoncxx::builder::stream::close_document;
+
+    // Update all documents that match the filter
+    collection.update_many(filter_doc.view(), update_doc.view());
+
+    //Chrono fin
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    cout << "Temps d'execution : " << elapsed.count() << " s\n";
+}
+
+/**
+ * Cette fonction permet de modifier toutes les valeurs de Type pour les remplacer par une nouvelle valeur (par exemple : "Human" par "Car")
+ */
+void updateAllKeyTypeContent(mongocxx::client &client) {
+    // Specify the database and collection in which you want to update the documents
+    cout << "Entrez le nom de la collection où se trouve le document : ";
+    string collectionName;
+    getline(cin, collectionName);
+
+    if(!collectionExist(client["actiaDataBase"], collectionName)){
+        cout << "La collection n'existe pas.\n";
+        return;
+    }
+
+    auto collection = client["actiaDataBase"][collectionName];
+
+    // Ask the old and new values from the user
+    cout << "Entrez la valeur actuelle à remplacer : ";
+    string oldValue;
+    getline(cin, oldValue);
+
+    cout << "Entrez la nouvelle valeur : ";
+    string newValue;
+    getline(cin, newValue);
+
+    // Create the filter document
+    bsoncxx::builder::stream::document filter_doc;
+    filter_doc << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
+               << oldValue;
+
+    // Create the update document
+    bsoncxx::builder::stream::document update_doc;
+    update_doc << "$set"
+               << bsoncxx::builder::stream::open_document << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
+               << newValue << bsoncxx::builder::stream::close_document;
+
+    // Update all documents that match the filter
+    collection.update_many(filter_doc.view(), update_doc.view());
 }

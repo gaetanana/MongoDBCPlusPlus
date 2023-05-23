@@ -14,3 +14,4 @@ void createOneDocumentJSON(mongocxx::client &client);
 void createManyDocumentsJSON(mongocxx::client &client);
 bool collectionExist(mongocxx::database database, string collectionName);
 std::vector<std::string> chargementEnMemoireXML(const std::string& dirPath);
+void createManyDocumentsJSONInMemory(mongocxx::client &client, string pathDir);

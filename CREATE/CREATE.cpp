@@ -317,6 +317,8 @@ void createManyDocumentsJSON(mongocxx::client& client) {
 void createManyDocumentsJSONInMemory(mongocxx::client &client, string pathDir){
     // Début du chrono pour mesurer le temps d'exécution
     auto start = chrono::high_resolution_clock::now();
+    long totalTimeConversionXMLToJSON = 0;
+
 
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
@@ -337,6 +339,8 @@ void createManyDocumentsJSONInMemory(mongocxx::client &client, string pathDir){
     for(const auto& xmlStr : xmlFiles){
         auto result = xmlToJson(xmlStr);
         string jsonStr = result.first;
+        long long duration = result.second;
+        totalTimeConversionXMLToJSON += duration;
 
         // Convertit le JSON en document BSON pour l'insertion dans MongoDB
         bsoncxx::document::value document = bsoncxx::from_json(jsonStr);
@@ -344,12 +348,11 @@ void createManyDocumentsJSONInMemory(mongocxx::client &client, string pathDir){
         // Ajoute le document à la liste
         documents.push_back(document);
     }
-
     // Insère tous les documents en une seule opération
     coll.insert_many(documents);
-
     auto stop = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
     cout << "Temps d'execution de l'insertion  : " << duration.count() << " secondes" << endl;
     cout << "Nombre de documents inseres : " << documents.size() << endl;
+    cout << "Temps total de conversion XML vers JSON : " << totalTimeConversionXMLToJSON << " microsecondes" << endl;
 }

@@ -23,12 +23,11 @@ using namespace std;
 
 int main() {
 
-
     mongocxx::instance instance{};
     mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
     mongocxx::client client(uri);
-    while (true) {
 
+    while (true) {
         std::cout << "\n========================================================\n";
         std::cout << "|| Programme de test de la base de donnees MongoDB    ||\n";
         std::cout << "========================================================\n";

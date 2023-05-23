@@ -39,6 +39,8 @@ bool collectionExist(mongocxx::database database, string collectionName){
     }
     return false;
 }
+
+
 /**
 * Cette fonction permet de créer une collection dans la base de données MongoDB
  * Elle permet de créer une collection dans la base de données actiaDataBase
@@ -151,7 +153,6 @@ std::pair<string, long long> xmlToJson(string xml){
  * Elle demande à l'utilisateur dans quelle collection il veut créer un document et un chemin absolu vers un fichier XML
  * et la fonction convertit le XML en JSON et l'insère dans la collection
  */
-
 void createOneDocumentJSON(mongocxx::client& client) {
     //On récupère la base de données actiaDataBase
     std::string dbName = "actiaDataBase";
@@ -194,11 +195,6 @@ void createOneDocumentJSON(mongocxx::client& client) {
     }
 }
 
-/**
-* Cette fonction permet de créer plusieurs documents dans une collection de la base de données MongoDB
- * Elle demande à l'utilisateur dans quelle collection il veut créer des documents et un chemin absolu vers un fichier XML
- * et la fonction convertit le XML en JSON et l'insère dans la collection
-*/
 /**
  * Cette fonction permet de créer plusieurs documents dans une collection de la base de données MongoDB
  * Elle demande à l'utilisateur dans quelle collection il veut créer des documents et un chemin absolu vers un fichier XML

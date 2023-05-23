@@ -208,7 +208,6 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
 /**
  * Cette fonction permet de lire tous les documents d'une collection avec un type Human et une probabilité
  * supérieure à 0.5 et supérieure à une date donnée dans le programme.
- *
  * 3 filtres
  */
 void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {

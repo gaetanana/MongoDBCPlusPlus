@@ -314,11 +314,10 @@ void createManyDocumentsJSON(mongocxx::client& client) {
  * et la fonction convertit le XML en JSON et l'insère dans la collection.
  * Cette fonction charge tous les fichiers XML en mémoire avant de les convertir en JSON et de les insérer dans la collection.
  */
-void createManyDocumentsJSONInMemory(mongocxx::client &client, string pathDir){
+void createManyDocumentsJSONInMemory(mongocxx::client &client){
     // Début du chrono pour mesurer le temps d'exécution
     auto start = chrono::high_resolution_clock::now();
     long totalTimeConversionXMLToJSON = 0;
-
 
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
@@ -333,6 +332,11 @@ void createManyDocumentsJSONInMemory(mongocxx::client &client, string pathDir){
         return;
     }
 
+    //Demander le chemin du dossier contenant les fichiers XML
+    std::string pathDir;
+    std::cout << "Veuillez entrer le chemin absolu vers le dossier contenant les fichiers XML : ";
+    std::getline(std::cin, pathDir);
+
     std::vector<bsoncxx::document::value> documents;
     std::vector<std::string> xmlFiles = chargementEnMemoireXML(pathDir);
 
@@ -344,7 +348,6 @@ void createManyDocumentsJSONInMemory(mongocxx::client &client, string pathDir){
 
         // Convertit le JSON en document BSON pour l'insertion dans MongoDB
         bsoncxx::document::value document = bsoncxx::from_json(jsonStr);
-
         // Ajoute le document à la liste
         documents.push_back(document);
     }

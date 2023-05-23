@@ -52,8 +52,11 @@ int main() {
             std::cout << "||                                                                   ||\n";
             std::cout << "|| 1 - Creer une collection dans la base de donnes 'actiaDataBase'   ||\n";
             std::cout << "|| 2 - Creer un document avec un fichier XML en valeur               ||\n";
-            std::cout << "|| 3 - Stocker l'ensemble des fichiers XML d'un dossier dans Redis   ||\n";
-            std::cout << "|| 4 - Quitter le menu Create                                        ||\n";
+            std::cout << "|| 3 - Stocker l'ensemble des fichiers XML d'un dossier dans Redis   ||\n"
+                         "||     (SANS CHARGER LES FICHERS EN MEMOIRE AVANT)                   ||\n";
+            std::cout << "|| 4 - Stocker l'ensemble des fichiers XML d'un dossier dans Redis   ||\n"
+                         "||     (EN CHARGEANT LES FICHERS EN MEMOIRE AVANT)                   ||\n";
+            std::cout << "|| 5 - Quitter le menu Create                                        ||\n";
             std::cout << "||                                                                   ||\n";
             std::cout << "========================================================================\n";
             int choixCreate;
@@ -69,10 +72,14 @@ int main() {
                 createOneDocumentJSON(client);
             }
             else if(choixCreate == 3){
-                //Création de plusieurs documents
+                //Création de plusieurs documents (SANS CHARGER LES FICHERS XML EN MEMOIRE AVANT)
                 createManyDocumentsJSON(client);
             }
             else if(choixCreate == 4){
+                //Création de plusieurs documents (EN CHARGEANT LES FICHERS XML EN MEMOIRE AVANT)
+                createManyDocumentsJSONInMemory(client);
+            }
+            else if(choixCreate == 5){
                 std::cout << "\nVous avez quitté le menu Create\n";
             }
         }

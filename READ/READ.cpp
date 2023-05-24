@@ -62,8 +62,6 @@ void readOneDocument(mongocxx::client &client) {
  * @param client
  */
 void readAllDocument(mongocxx::client &client) {
-    // Début du chrono pour mesurer le temps d'exécution
-    auto startChrono = chrono::high_resolution_clock::now();
     int nbDocuments = 0;
 
     mongocxx::database db = client["actiaDataBase"];
@@ -75,6 +73,9 @@ void readAllDocument(mongocxx::client &client) {
         cout << "La collection n'existe pas.\n";
         return;
     }
+
+    // Début du chrono pour mesurer le temps d'exécution
+    auto startChrono = chrono::high_resolution_clock::now();
     mongocxx::collection collection = db[collectionName];
     mongocxx::cursor cursor = collection.find({});
     for (auto doc: cursor) {
@@ -97,8 +98,6 @@ void readAllDocument(mongocxx::client &client) {
  * @param client
  */
 void readAllDocumentWithHuman(mongocxx::client &client) {
-    //Début du chrono pour mesurer le temps d'exécution
-    auto startChrono = chrono::high_resolution_clock::now();
     //Compteur de documents lus avec un type Human
     int nbDocuments = 0;
 
@@ -112,6 +111,8 @@ void readAllDocumentWithHuman(mongocxx::client &client) {
         cout << "La collection n'existe pas.\n";
         return;
     }
+    //Début du chrono pour mesurer le temps d'exécution
+    auto startChrono = chrono::high_resolution_clock::now();
     mongocxx::collection collection = db[collectionName];
     //Requête pour lire les documents avec un type Human
     auto cursor = collection.find(
@@ -137,8 +138,7 @@ void readAllDocumentWithHuman(mongocxx::client &client) {
  * @param client
  */
 void readAllDocumentWithHumanProbability(mongocxx::client &client) {
-    // Début du chrono pour mesurer le temps d'exécution
-    auto start = chrono::high_resolution_clock::now();
+
 
     // Compteur de documents avec un type Human et une probabilité supérieure à 0.5
     int nbDocs = 0;
@@ -153,6 +153,8 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
         cout << "La collection n'existe pas.\n";
         return;
     }
+    // Début du chrono pour mesurer le temps d'exécution
+    auto start = chrono::high_resolution_clock::now();
     mongocxx::collection collection = db[collectionName];
     // Récupère tous les documents de la collection
     auto cursor = collection.find({});
@@ -211,8 +213,7 @@ void readAllDocumentWithHumanProbability(mongocxx::client &client) {
  * 3 filtres
  */
 void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
-    // Début du chrono pour mesurer le temps d'exécution
-    auto startChrono = chrono::high_resolution_clock::now();
+
 
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
@@ -224,6 +225,8 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
         cout << "La collection n'existe pas.\n";
         return;
     }
+    // Début du chrono pour mesurer le temps d'exécution
+    auto startChrono = chrono::high_resolution_clock::now();
 
     mongocxx::collection collection = db[collectionName];
     auto cursor = collection.find({});
@@ -289,9 +292,6 @@ void readAllDocumentWithHumanProbabilityAndDate(mongocxx::client &client) {
  * @param client
  */
 void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) {
-    // Début du chrono pour mesurer le temps d'exécution
-    auto start = chrono::high_resolution_clock::now();
-
     mongocxx::database db = client["actiaDataBase"];
     cout << "Entrer le nom de la collection : ";
     string collectionName;
@@ -302,6 +302,10 @@ void readAllDocumentWithHumanProbabilityAndDateGender(mongocxx::client &client) 
         cout << "La collection n'existe pas.\n";
         return;
     }
+
+    // Début du chrono pour mesurer le temps d'exécution
+    auto start = chrono::high_resolution_clock::now();
+
     mongocxx::collection collection = db[collectionName];
     auto cursor = collection.find({});
     int documentCount = 0;

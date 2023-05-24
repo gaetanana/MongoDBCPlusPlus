@@ -59,8 +59,7 @@ void deleteOneDocument(mongocxx::client &client) {
  */
 
 void deleteAllDocuments(mongocxx::client &client) {
-    //Chronomètre pour calculer le temps d'exécution
-    auto startChrono = chrono::high_resolution_clock::now();
+
     mongocxx::database db = client["actiaDataBase"];
     //Demande à l'utilisateur le nom de la collection à vider
     cout << "Entrer le nom de la collection : ";
@@ -72,13 +71,17 @@ void deleteAllDocuments(mongocxx::client &client) {
         return;
     }
     mongocxx::collection collection = db[collectionName];
+
+    //Chronomètre pour calculer le temps d'exécution
+    auto startChrono = chrono::high_resolution_clock::now();
     //Requête pour supprimer tous les documents de la collection
     collection.delete_many({});
     cout << "Tous les documents ont ete supprimes avec succes.\n";
     //Chronomètre fin
     auto endChrono = chrono::high_resolution_clock::now();
-    chrono::duration<double> elapsed = endChrono - startChrono;
-    cout << "Temps d'execution : " << elapsed.count() << " secondes\n";
+    //Calcul du temps d'exécution
+    auto duration = chrono::duration_cast<chrono::milliseconds>(endChrono - startChrono);
+    cout << "Temps d'execution : " << duration.count() << " milliseconds\n";
 }
 
 

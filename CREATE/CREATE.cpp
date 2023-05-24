@@ -240,8 +240,7 @@ void createOneDocumentJSON(mongocxx::client& client) {
  * Cette fonction charge pas tous les fichiers XML en mémoire, elle les lit un par un.
  */
 void createManyDocumentsJSON(mongocxx::client& client) {
-    // Début du chrono pour mesurer le temps d'exécution
-    auto start = chrono::high_resolution_clock::now();
+
 
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
@@ -265,6 +264,8 @@ void createManyDocumentsJSON(mongocxx::client& client) {
     std::cout << "Veuillez entrer le chemin absolu vers le dossier contenant les fichiers XML : ";
     std::getline(std::cin, dirPath);
 
+    // Début du chrono pour mesurer le temps d'exécution
+    auto start = chrono::high_resolution_clock::now();
     std::cout << "Traitement en cours . . .";
 
     // Parcours chaque fichier dans le dossier
@@ -315,10 +316,6 @@ void createManyDocumentsJSON(mongocxx::client& client) {
  * Cette fonction charge tous les fichiers XML en mémoire avant de les convertir en JSON et de les insérer dans la collection.
  */
 void createManyDocumentsJSONInMemory(mongocxx::client &client){
-    // Début du chrono pour mesurer le temps d'exécution
-    auto start = chrono::high_resolution_clock::now();
-    long totalTimeConversionXMLToJSON = 0;
-
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
 
@@ -336,6 +333,10 @@ void createManyDocumentsJSONInMemory(mongocxx::client &client){
     std::string pathDir;
     std::cout << "Veuillez entrer le chemin absolu vers le dossier contenant les fichiers XML : ";
     std::getline(std::cin, pathDir);
+
+    // Début du chrono pour mesurer le temps d'exécution
+    auto start = chrono::high_resolution_clock::now();
+    long totalTimeConversionXMLToJSON = 0;
 
     std::vector<bsoncxx::document::value> documents;
     std::vector<std::string> xmlFiles = chargementEnMemoireXML(pathDir);

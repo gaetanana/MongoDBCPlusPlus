@@ -78,8 +78,6 @@ void updateOneDocument(mongocxx::client &client) {
 * Cette fonction permet de modifier toutes les valeurs qui ont le type "Human" pour le remplacer par une nouvelle valeur
 */
 void updateAllHumanDocument(mongocxx::client &client) {
-    // Début du chronométrage
-    auto start = std::chrono::high_resolution_clock::now();
 
     // Spécifier la base de données et la collection dans laquelle vous souhaitez mettre à jour les documents
     cout << "Entrez le nom de la collection ou se trouve les documents : ";
@@ -91,6 +89,8 @@ void updateAllHumanDocument(mongocxx::client &client) {
         cout << "La collection n'existe pas.\n";
         return;
     }
+    // Début du chronométrage
+    auto start = std::chrono::high_resolution_clock::now();
 
     auto collection = client["actiaDataBase"][collectionName];
 
@@ -124,8 +124,7 @@ void updateAllHumanDocument(mongocxx::client &client) {
  * Cette fonction permet de modifier toutes les valeurs de Type pour les remplacer par une nouvelle valeur (par exemple : "Human" par "Car")
  */
 void updateAllKeyTypeContent(mongocxx::client &client) {
-    // Début du chronométrage
-    auto start = std::chrono::high_resolution_clock::now();
+
 
     // Spécifiez la base de données et la collection dans laquelle vous voulez mettre à jour les documents
     cout << "Entrez le nom de la collection ou se trouve le document : ";
@@ -145,6 +144,8 @@ void updateAllKeyTypeContent(mongocxx::client &client) {
     string newValue;
     getline(cin, newValue);
 
+    // Début du chronométrage
+    auto start = std::chrono::high_resolution_clock::now();
     // Créer le document de mise à jour
     bsoncxx::builder::stream::document update_doc;
     update_doc << "$set"

@@ -52,9 +52,9 @@ int main() {
             std::cout << "||                                                                   ||\n";
             std::cout << "|| 1 - Creer une collection dans la base de donnes 'actiaDataBase'   ||\n";
             std::cout << "|| 2 - Creer un document avec un fichier XML en valeur               ||\n";
-            std::cout << "|| 3 - Stocker l'ensemble des fichiers XML d'un dossier dans Redis   ||\n"
+            std::cout << "|| 3 - Stocker l'ensemble des fichiers XML d'un dossier dans MongoDB ||\n"
                          "||     (SANS CHARGER LES FICHERS EN MEMOIRE AVANT)                   ||\n";
-            std::cout << "|| 4 - Stocker l'ensemble des fichiers XML d'un dossier dans Redis   ||\n"
+            std::cout << "|| 4 - Stocker l'ensemble des fichiers XML d'un dossier dans MongoDB ||\n"
                          "||     (EN CHARGEANT LES FICHERS EN MEMOIRE AVANT)                   ||\n";
             std::cout << "|| 5 - Quitter le menu Create                                        ||\n";
             std::cout << "||                                                                   ||\n";

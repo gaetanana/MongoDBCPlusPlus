@@ -121,6 +121,7 @@ std::pair<string, long long> xmlToJson(string xml){
     auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
 
     // Renvoie la chaîne JSON et le temps d'exécution
+    //std::cout << jsonStr << "\n";
     return std::make_pair(jsonStr, duration.count());
 }
 

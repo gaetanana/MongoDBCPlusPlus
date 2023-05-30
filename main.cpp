@@ -22,7 +22,6 @@ using bsoncxx::builder::stream::open_document;
 using namespace std;
 
 int main() {
-
     mongocxx::instance instance{};
     mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
     mongocxx::client client(uri);

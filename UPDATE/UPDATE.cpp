@@ -89,10 +89,12 @@ void updateAllHumanDocument(mongocxx::client &client) {
         cout << "La collection n'existe pas.\n";
         return;
     }
+
+    auto collection = client["actiaDataBase"][collectionName];
+
     // Début du chronométrage
     auto start = std::chrono::high_resolution_clock::now();
 
-    auto collection = client["actiaDataBase"][collectionName];
 
     // Créer le document de filtre
     bsoncxx::builder::stream::document filter_doc;

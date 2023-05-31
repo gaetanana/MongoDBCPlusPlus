@@ -242,7 +242,6 @@ void createOneDocumentJSON(mongocxx::client& client) {
  */
 void createManyDocumentsJSON(mongocxx::client& client) {
 
-
     std::string dbName = "actiaDataBase";
     mongocxx::database db = client[dbName];
     long totalTimeConversionXMLToJSON = 0;

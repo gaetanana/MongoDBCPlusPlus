@@ -162,10 +162,3 @@ void updateAllKeyTypeContent(mongocxx::client &client) {
     std::chrono::duration<double> elapsed = finish - start;
     cout << "Temps d'execution : " << elapsed.count() << " s\n";
 }
-
-
-
-
-
-
-

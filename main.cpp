@@ -23,7 +23,8 @@ using namespace std;
 
 int main() {
     mongocxx::instance instance{};
-    mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017");
+    //mongocxx::uri uri("mongodb://root:examplepassword@localhost:27017"); //URI de la base de données MongoDB docker
+    mongocxx::uri uri("mongodb://localhost:27017"); //URI de la base de données MongoDB locale
     mongocxx::client client(uri);
 
     while (true) {

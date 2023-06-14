@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 project(MongoDBCPlusPlus)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_GENERATOR_PLATFORM x32)
+set(CMAKE_GENERATOR_PLATFORM x64)
 
 #Include des directories C et C++
 include_directories("DriversMongoDB/mongo-cxx-driver-r3.7.0/mongo-cxx-driver-r3.7.0/build/install/include/mongocxx/v_noabi")

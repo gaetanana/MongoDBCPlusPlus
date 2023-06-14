@@ -10,6 +10,11 @@ Prérequis
 - Avoir l'IDE Visual Studio 2019
 - Un serveur MongoDB qui tourne (vous trouverez un tutoriel à l'emplacement suivant : https://github.com/gaetanana/MongoDBC/blob/main/Documentation/InstallationServeurMongoDB.pdf.
 
+Ajout des dossiers BIN dans les variables d'environement
+---------
+
+
+
 Lancement du programme
 ----------------------
 

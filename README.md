@@ -6,10 +6,9 @@ Bienvenue dans mon projet qui a pour objectif de tester MongoDB dans un programm
 
 Prérequis
 ---------
-
-Avoir installé le driver MongoDB pour C++ et avoir un serveur MongoDB qui tourne sur le port 27017 (par défaut) sur votre machine.
-
-Voici un tutoriel pour installer le driver MongoDB pour C++ : https://docs.google.com/document/d/1AGGrEhTUza4EuMJWugwa03iZezALbclMH10U9Xezo1E/edit?usp=sharing
+- Avoir le dossier compressé "MongoDBCPlusPlus.zip" (Vous devez forcément avoir le fichier ZIP, car dans le dépôt GitHub, il n'y a pas le driver).
+- Avoir l'IDE Visual Studio 2019
+- Un serveur MongoDB qui tourne (vous trouverez un tutoriel à l'emplacement suivant : https://github.com/gaetanana/MongoDBC/blob/main/Documentation/InstallationServeurMongoDB.pdf.
 
 Lancement du programme
 ----------------------

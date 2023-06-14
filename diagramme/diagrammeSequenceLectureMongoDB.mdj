@@ -706,9 +706,9 @@
 												"$ref": "AAAAAAGIfHWGgRJjcbM="
 											},
 											"font": "Arial;13;0",
-											"left": 322,
+											"left": 319,
 											"top": 129,
-											"width": 257.9814453125,
+											"width": 262.310546875,
 											"height": 13,
 											"alpha": 1.5707963267948966,
 											"distance": 10,
@@ -716,7 +716,7 @@
 												"$ref": "AAAAAAGIfHWGgRJk71w="
 											},
 											"edgePosition": 1,
-											"text": "2 : Vérifie que la base de la BD soit démarée"
+											"text": "2 : Vérifie que la base de la BD soit démarrée"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -817,9 +817,9 @@
 												"$ref": "AAAAAAGIfHfWWxKYRno="
 											},
 											"font": "Arial;13;0",
-											"left": 360,
+											"left": 358,
 											"top": 220,
-											"width": 91.04443359375,
+											"width": 95.37353515625,
 											"height": 13,
 											"alpha": 0.21866899293277564,
 											"distance": 46.09772228646444,
@@ -827,7 +827,7 @@
 												"$ref": "AAAAAAGIfHfWWxKZi9w="
 											},
 											"edgePosition": 1,
-											"text": "3 : BD démarée"
+											"text": "3 : BD démarrée"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1468,118 +1468,6 @@
 								},
 								{
 									"_type": "UMLSeqMessageView",
-									"_id": "AAAAAAGIfH8qUBM06BY=",
-									"_parent": {
-										"$ref": "AAAAAAGIfGqi4xBZHG8="
-									},
-									"model": {
-										"$ref": "AAAAAAGIfH8qTxMzd38="
-									},
-									"subViews": [
-										{
-											"_type": "EdgeLabelView",
-											"_id": "AAAAAAGIfH8qUBM1w6Q=",
-											"_parent": {
-												"$ref": "AAAAAAGIfH8qUBM06BY="
-											},
-											"model": {
-												"$ref": "AAAAAAGIfH8qTxMzd38="
-											},
-											"font": "Arial;13;0",
-											"left": 140,
-											"top": 460,
-											"width": 159.70703125,
-											"height": 13,
-											"alpha": 1.5707963267948966,
-											"distance": 10,
-											"hostEdge": {
-												"$ref": "AAAAAAGIfH8qUBM06BY="
-											},
-											"edgePosition": 1,
-											"text": "9 : La collection existe pas"
-										},
-										{
-											"_type": "EdgeLabelView",
-											"_id": "AAAAAAGIfH8qUBM2UaY=",
-											"_parent": {
-												"$ref": "AAAAAAGIfH8qUBM06BY="
-											},
-											"model": {
-												"$ref": "AAAAAAGIfH8qTxMzd38="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"left": 219,
-											"top": 475,
-											"height": 13,
-											"alpha": 1.5707963267948966,
-											"distance": 25,
-											"hostEdge": {
-												"$ref": "AAAAAAGIfH8qUBM06BY="
-											},
-											"edgePosition": 1
-										},
-										{
-											"_type": "EdgeLabelView",
-											"_id": "AAAAAAGIfH8qUBM3Hbg=",
-											"_parent": {
-												"$ref": "AAAAAAGIfH8qUBM06BY="
-											},
-											"model": {
-												"$ref": "AAAAAAGIfH8qTxMzd38="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"left": 220,
-											"top": 440,
-											"height": 13,
-											"alpha": -1.5707963267948966,
-											"distance": 10,
-											"hostEdge": {
-												"$ref": "AAAAAAGIfH8qUBM06BY="
-											},
-											"edgePosition": 1
-										},
-										{
-											"_type": "UMLActivationView",
-											"_id": "AAAAAAGIfH8qUBM4nsg=",
-											"_parent": {
-												"$ref": "AAAAAAGIfH8qUBM06BY="
-											},
-											"model": {
-												"$ref": "AAAAAAGIfH8qTxMzd38="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"left": 122,
-											"top": 456,
-											"width": 14,
-											"height": 25
-										}
-									],
-									"font": "Arial;13;0",
-									"head": {
-										"$ref": "AAAAAAGIfGscrhCo5hk="
-									},
-									"tail": {
-										"$ref": "AAAAAAGIfGuo5xDRIsY="
-									},
-									"points": "318:456;122:456",
-									"nameLabel": {
-										"$ref": "AAAAAAGIfH8qUBM1w6Q="
-									},
-									"stereotypeLabel": {
-										"$ref": "AAAAAAGIfH8qUBM2UaY="
-									},
-									"propertyLabel": {
-										"$ref": "AAAAAAGIfH8qUBM3Hbg="
-									},
-									"activation": {
-										"$ref": "AAAAAAGIfH8qUBM4nsg="
-									}
-								},
-								{
-									"_type": "UMLSeqMessageView",
 									"_id": "AAAAAAGIfIIf2hOPAcE=",
 									"_parent": {
 										"$ref": "AAAAAAGIfGqi4xBZHG8="
@@ -1608,7 +1496,7 @@
 												"$ref": "AAAAAAGIfIIf2hOPAcE="
 											},
 											"edgePosition": 1,
-											"text": "10 : Envoie tous les documents"
+											"text": "9 : Envoie tous les documents"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1720,7 +1608,7 @@
 												"$ref": "AAAAAAGIfILu+RPIr5I="
 											},
 											"edgePosition": 1,
-											"text": "11 : Affiche tous les documents"
+											"text": "10 : Affiche tous les documents"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -1967,7 +1855,7 @@
 												"$ref": "AAAAAAGIirUc1YiYgd8="
 											},
 											"edgePosition": 1,
-											"text": "12 : La collection existe pas"
+											"text": "11 : La collection existe pas"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -2079,7 +1967,7 @@
 												"$ref": "AAAAAAGIirXHCoiuMdg="
 											},
 											"edgePosition": 1,
-											"text": "13 : Affiche message erreur collection"
+											"text": "12 : Affiche message erreur collection"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -2185,7 +2073,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGIfGqi4xBYRPs="
 							},
-							"name": "Vérifie que la base de la BD soit démarée",
+							"name": "Vérifie que la base de la BD soit démarrée",
 							"source": {
 								"$ref": "AAAAAAGIfGuo5xDKdr0="
 							},
@@ -2199,7 +2087,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGIfGqi4xBYRPs="
 							},
-							"name": "BD démarée",
+							"name": "BD démarrée",
 							"source": {
 								"$ref": "AAAAAAGIfGvLDhDq56A="
 							},
@@ -2279,21 +2167,6 @@
 							"target": {
 								"$ref": "AAAAAAGIfGvLDhDq56A="
 							}
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAGIfH8qTxMzd38=",
-							"_parent": {
-								"$ref": "AAAAAAGIfGqi4xBYRPs="
-							},
-							"name": "La collection existe pas",
-							"source": {
-								"$ref": "AAAAAAGIfGuo5xDKdr0="
-							},
-							"target": {
-								"$ref": "AAAAAAGIfGscrhCh+GA="
-							},
-							"messageSort": "reply"
 						},
 						{
 							"_type": "UMLMessage",
@@ -2472,7 +2345,8 @@
 					"_parent": {
 						"$ref": "AAAAAAGIfGqi4hBXGHU="
 					},
-					"name": "Role2"
+					"name": "Role2",
+					"type": ""
 				},
 				{
 					"_type": "UMLAttribute",
@@ -2480,7 +2354,8 @@
 					"_parent": {
 						"$ref": "AAAAAAGIfGqi4hBXGHU="
 					},
-					"name": "Role3"
+					"name": "Role3",
+					"type": ""
 				},
 				{
 					"_type": "UMLAttribute",

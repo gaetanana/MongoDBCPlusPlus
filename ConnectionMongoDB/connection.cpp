@@ -23,6 +23,7 @@ using bsoncxx::builder::stream::open_document;
  * Cette fonction permet de se connecter à la base de données MongoDB
  * @return
  */
+
 mongocxx::collection connectionMongoDB(){
     mongocxx::instance inst{};
     mongocxx::client conn{mongocxx::uri{"mongodb://root:examplepassword@localhost:27017"}};

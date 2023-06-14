@@ -45,7 +45,8 @@ void deleteOneDocument(mongocxx::client &client) {
     string id;
     getline(cin, id);
     //Requête pour supprimer le document
-    bsoncxx::stdx::optional<mongocxx::result::delete_result> result = collection.delete_one(document{} << "_id" << id << finalize);
+    bsoncxx::stdx::optional<mongocxx::result::delete_result> result =
+            collection.delete_one(document{} << "_id" << id << finalize);
     //Vérifie si la suppression s'est bien passée
     if (result) {
         cout << "Document supprime avec succes.\n";

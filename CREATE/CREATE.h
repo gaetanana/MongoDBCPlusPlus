@@ -12,7 +12,8 @@ using namespace std;
 void createCollection(mongocxx::client &client);
 void createOneDocumentJSON(mongocxx::client &client);
 void createManyDocumentsJSON(mongocxx::client &client);
+void createManyDocumentsJSONInMemory(mongocxx::client &client);
+
 bool collectionExist(mongocxx::database database, string collectionName);
 std::vector<std::string> chargementEnMemoireXML(const std::string& dirPath);
-void createManyDocumentsJSONInMemory(mongocxx::client &client);
 std::pair<string, long long> xmlToJson(string xml);

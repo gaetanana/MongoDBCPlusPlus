@@ -573,9 +573,9 @@
 												"$ref": "AAAAAAGIiqpHwmSRueM="
 											},
 											"font": "Arial;13;0",
-											"left": 537,
+											"left": 535,
 											"top": 130,
-											"width": 194.3779296875,
+											"width": 198.70703125,
 											"height": 13,
 											"alpha": 1.5707963267948966,
 											"distance": 10,
@@ -583,7 +583,7 @@
 												"$ref": "AAAAAAGIiqpHwmSS4gQ="
 											},
 											"edgePosition": 1,
-											"text": "2 : Vérifie que la DB soit démarée"
+											"text": "2 : Vérifie que la BD soit démarrée"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -2521,7 +2521,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGIiqWRzmPKYgo="
 							},
-							"name": "Vérifie que la DB soit démarée",
+							"name": "Vérifie que la BD soit démarrée",
 							"source": {
 								"$ref": "AAAAAAGIiqaMrmQCzRY="
 							},

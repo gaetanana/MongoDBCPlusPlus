@@ -63,7 +63,8 @@ void updateOneDocument(mongocxx::client &client) {
     if (doc) {
         auto view = doc->view();
         //Condition pour vérifier si la valeur de la clé est "Human"
-        if (view["metadata"]["tt:MetadataStream"]["tt:VideoAnalytics"]["tt:Frame"]["tt:Object"]["tt:Appearance"]["tt:Class"]["tt:Type"]["content"].get_utf8().value.to_string() == "Human") {
+        if (view["metadata"]["tt:MetadataStream"]["tt:VideoAnalytics"]["tt:Frame"]["tt:Object"]
+        ["tt:Appearance"]["tt:Class"]["tt:Type"]["content"].get_utf8().value.to_string() == "Human") {
             //Requête pour modifier la valeur de la clé
             bsoncxx::builder::stream::document update_doc{};
             update_doc << "$set" << bsoncxx::builder::stream::open_document
@@ -109,7 +110,8 @@ void updateAllHumanDocument(mongocxx::client &client) {
     // Créer le document de mise à jour
     bsoncxx::builder::stream::document update_doc;
     update_doc << "$set"
-               << bsoncxx::builder::stream::open_document << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
+               << bsoncxx::builder::stream::open_document << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0."
+                                                             "tt:Appearance.0.tt:Class.0.tt:Type.0.value"
                << newValue << bsoncxx::builder::stream::close_document;
 
     // Mettre à jour tous les documents qui correspondent au filtre
@@ -151,7 +153,8 @@ void updateAllKeyTypeContent(mongocxx::client &client) {
     // Créer le document de mise à jour
     bsoncxx::builder::stream::document update_doc;
     update_doc << "$set"
-               << bsoncxx::builder::stream::open_document << "tt:VideoAnalytics.0.tt:Frame.0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
+               << bsoncxx::builder::stream::open_document << "tt:VideoAnalytics.0.tt:Frame."
+                                                             "0.tt:Object.0.tt:Appearance.0.tt:Class.0.tt:Type.0.value"
                << newValue << bsoncxx::builder::stream::close_document;
 
     // Mettre à jour tous les documents

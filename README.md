@@ -6,13 +6,17 @@ Bienvenue dans mon projet qui a pour objectif de tester MongoDB dans un programm
 
 Prérequis
 ---------
-- Avoir le dossier compressé "MongoDBCPlusPlus.zip" (Vous devez forcément avoir le fichier ZIP, car dans le dépôt GitHub, il n'y a pas le driver).
+- Avoir le dossier compressé **"MongoDBCPlusPlus.zip"** (Vous devez forcément avoir le fichier ZIP, car dans le dépôt GitHub, il n'y a pas le driver).
 - Avoir l'IDE Visual Studio 2019
 - Un serveur MongoDB qui tourne (vous trouverez un tutoriel à l'emplacement suivant : https://github.com/gaetanana/MongoDBC/blob/main/Documentation/InstallationServeurMongoDB.pdf.
+- Avoir le dossier **boost** dans "C:/"
+Lien pour installer boost : 
+https://www.boost.org/users/download/
 
 Ajout des dossiers BIN dans les variables d'environement
 ---------
 
+Vous devez ajouter les 
 
 
 Lancement du programme

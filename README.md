@@ -8,6 +8,7 @@ Prérequis
 ---------
 - Avoir le dossier compressé **"MongoDBCPlusPlus.zip"** (Vous devez forcément avoir le fichier ZIP, car dans le dépôt GitHub, il n'y a pas le driver).
 - Avoir l'IDE Visual Studio 2019
+- Dans visual studio choisir des configurations de type **32 bits**.
 - Un serveur MongoDB qui tourne (vous trouverez un tutoriel à l'emplacement suivant : https://github.com/gaetanana/MongoDBC/blob/main/Documentation/InstallationServeurMongoDB.pdf.
 - Avoir le dossier **boost** dans **"C:/"**
 Lien pour installer boost : 
@@ -18,13 +19,13 @@ Ajout des dossiers BIN dans les variables d'environement
 
 Voici les chemins à ajouter dans vos variables d'environement : 
 
-VOTRE CHEMIN\MongoDBCPlusPlus\DriversMongoDB\mongo-c-driver-1.22.1\mongo-c-driver-1.22.1\build\install\bin
+`VOTRE CHEMIN\MongoDBCPlusPlus\DriversMongoDB\mongo-c-driver-1.22.1\mongo-c-driver-1.22.1\build\install\bin`
 
-VOTRE CHEMIN\MongoDBCPlusPlus\DriversMongoDB\mongo-cxx-driver-r3.7.0\mongo-cxx-driver-r3.7.0\build\install\bin
+`VOTRE CHEMIN\MongoDBCPlusPlus\DriversMongoDB\mongo-cxx-driver-r3.7.0\mongo-cxx-driver-r3.7.0\build\install\bin`
 
-VOTRE CHEMIN\MongoDBCPlusPlus\DriverJSON\jsoncpp2\build\install\bin
+`VOTRE CHEMIN\MongoDBCPlusPlus\DriverJSON\jsoncpp2\build\install\bin`
 
-C:\Program Files\Python\Python311
+`C:\Program Files\Python\Python311`
 
 Lancement du programme
 ----------------------
